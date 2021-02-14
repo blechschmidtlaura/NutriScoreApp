@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculateOnClick(View v) {
         Editable input = sugarInput.getText();
+        //TODO: Rechnung für den Score hinzufügen
         this.textView1.setText(input);
     }
 }

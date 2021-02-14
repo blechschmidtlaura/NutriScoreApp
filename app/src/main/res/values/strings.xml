@@ -3,4 +3,6 @@
     <string name="hello_laura">Hello laura</string>
     <string name="zuckermenge_eingeben">Zuckermenge eingeben</string>
     <string name="klick_mich">Klick mich!</string>
+    <string name="auswerten">auswerten</string>
+    <string name="dein_nutri_score">Dein Nutri-Score:</string>
 </resources>
