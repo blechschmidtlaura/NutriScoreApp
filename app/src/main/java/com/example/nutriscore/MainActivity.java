@@ -3,10 +3,9 @@ package com.example.nutriscore;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,8 +37,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculateOnClick(View v) {
-        Editable input = sugarInput.getText();
+        String sugarInputText = sugarInput.getText().toString();
         //TODO: Rechnung für den Score hinzufügen
-        this.textView1.setText(input);
+        String oldText = this.textView1.getText().toString();
+        this.textView1.setText(oldText + " " + sugarInputText);
+        this.hideKeyboard(this.textView1);
+    }
+
+    private void hideKeyboard(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 }
