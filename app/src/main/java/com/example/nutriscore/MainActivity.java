@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView1;
+    private EditText sugarInput;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,11 +18,13 @@ public class MainActivity extends AppCompatActivity {
         this.textView1 = findViewById(R.id.textView1);
         Button button = findViewById(R.id.button);
         button.setOnClickListener(this::buttonOnClick);
-        EditText sugarInput = findViewById(R.id.InputSugar);
+        this.sugarInput = findViewById(R.id.InputSugar);
+
     }
 
     public void buttonOnClick(View v) {
         this.textView1.setText("Ausgabe");
+        this.sugarInput.setVisibility(View.VISIBLE);
     }
 
 
