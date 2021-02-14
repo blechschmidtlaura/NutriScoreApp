@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public void calculateOnClick(View v) {
         String sugarInputText = sugarInput.getText().toString();
         //TODO: Rechnung für den Score hinzufügen
-        String oldText = this.textView1.getText().toString();
+        String oldText = getResources().getString(R.string.dein_nutri_score);;
         this.textView1.setText(oldText + " " + sugarInputText);
         this.hideKeyboard(this.textView1);
     }
