@@ -11,37 +11,42 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private final int BUTTON_TO_SHOW_FADE_OUT_DURATION = 1000;
     private Button buttonToShow;
-    private TextView textView1;
+    private TextView nutriScoreTextView;
     private EditText sugarInput;
     private Button calculate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.textView1 = findViewById(R.id.textView1);
-        this.buttonToShow = findViewById(R.id.button);
-        buttonToShow.setOnClickListener(this::buttonOnClick);
+        this.nutriScoreTextView = findViewById(R.id.textView1);
         this.sugarInput = findViewById(R.id.InputSugar);
+
+        this.buttonToShow = findViewById(R.id.button);
+        buttonToShow.setOnClickListener(this::buttonToShowOnClick);
         this.calculate = findViewById(R.id.button2);
         calculate.setOnClickListener(this::calculateOnClick);
     }
 
-    public void buttonOnClick(View v) {
+    private void fadeOutView(View v, int duration){
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-        anim.setDuration(1000);
-        buttonToShow.startAnimation(anim);
+        anim.setDuration(duration);
+        v.startAnimation(anim);
+    }
+
+    private void buttonToShowOnClick(View v) {
+        this.fadeOutView(this.buttonToShow, this.BUTTON_TO_SHOW_FADE_OUT_DURATION);
         this.sugarInput.setVisibility(View.VISIBLE);
         this.calculate.setVisibility(View.VISIBLE);
         this.buttonToShow.setVisibility(View.INVISIBLE);
     }
 
-    public void calculateOnClick(View v) {
-        String sugarInputText = sugarInput.getText().toString();
-        //TODO: Rechnung für den Score hinzufügen
-        String oldText = getResources().getString(R.string.dein_nutri_score);;
-        this.textView1.setText(oldText + " " + sugarInputText);
-        this.hideKeyboard(this.textView1);
+    private void calculateOnClick(View v) {
+        int amountSugar = Integer.parseInt(sugarInput.getText().toString());
+        String score = String.valueOf(NutriScore.getScore(amountSugar));
+        this.nutriScoreTextView.setText(getString(R.string.dein_nutri_score) + score);
+        this.hideKeyboard(this.nutriScoreTextView);
     }
 
     private void hideKeyboard(View v) {
