@@ -8,6 +8,7 @@ public class ButtonToShow {
 
     public ButtonToShow(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        this.mainActivity.buttonToShow.setOnClickListener(this::onClick);
     }
 
     public void onClick(View v) {

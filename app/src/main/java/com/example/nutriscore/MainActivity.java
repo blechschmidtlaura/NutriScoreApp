@@ -21,12 +21,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.findViews();
-
         ButtonToShow btn= new ButtonToShow(this);
-        buttonToShow.setOnClickListener(btn::onClick);
-
         CalculateButton calculateButton = new CalculateButton(this);
-        calculate.setOnClickListener(calculateButton::onClick);
     }
 
     protected void findViews(){

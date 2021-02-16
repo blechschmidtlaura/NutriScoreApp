@@ -9,6 +9,7 @@ public class CalculateButton {
 
     public CalculateButton(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        this.mainActivity.calculate.setOnClickListener(this::onClick);
     }
 
     public void onClick(View v) {
