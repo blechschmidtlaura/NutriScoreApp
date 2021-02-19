@@ -24,7 +24,8 @@ public class CalculateButton {
         // TODO: manage not integer Inputs
         int amountSugar = Integer.parseInt(this.mainActivity.sugarInput.getText().toString());
         Food food = new Food(amountSugar);
-        char score = NutriScore.getScore(food);
+        NutriScore nutriScore = new NutriScore(mainActivity.getApplicationContext());
+        char score = nutriScore.getScore(food);
         this.mainActivity.nutriScoreTextView.setText(this.mainActivity.getString(R.string.dein_nutri_score) + score);
         this.hideKeyboard(this.mainActivity.nutriScoreTextView);
     }

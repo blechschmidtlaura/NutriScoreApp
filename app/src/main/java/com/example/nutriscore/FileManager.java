@@ -1,8 +1,12 @@
 package com.example.nutriscore;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 public class FileManager {
@@ -10,20 +14,9 @@ public class FileManager {
         System.out.println();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String getPathToFileString(String fileName){
-        return FileManager.getPathToFile(fileName).toString();
-    }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    static Path getPathToFile(String fileName){
-        return FileManager.getPathToData().resolve(fileName);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    static Path getPathToData(){
-        return Paths.get(System.getProperty("user.dir"), "sampledata");
+    public static InputStream getInputStreamFile(String fileName, Context c) throws IOException {
+        return c.getResources().getAssets().open(fileName);
     }
 
 }
