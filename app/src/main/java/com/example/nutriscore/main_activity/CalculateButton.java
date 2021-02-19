@@ -1,8 +1,14 @@
-package com.example.nutriscore;
+package com.example.nutriscore.main_activity;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.RequiresApi;
+
+import com.example.nutriscore.R;
+import com.example.nutriscore.calculation.NutriScore;
 
 public class CalculateButton {
     private MainActivity mainActivity;
@@ -12,6 +18,7 @@ public class CalculateButton {
         this.mainActivity.calculate.setOnClickListener(this::onClick);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClick(View v) {
         // TODO: manage not integer Inputs
         int amountSugar = Integer.parseInt(this.mainActivity.sugarInput.getText().toString());

@@ -1,7 +1,7 @@
 package com.example.nutriscore;
 
 import org.junit.Test;
-
+import com.example.nutriscore.FileManager;
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +12,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        System.out.println(FileManager.getPathToFileString("Natrium.txt"));
     }
 }

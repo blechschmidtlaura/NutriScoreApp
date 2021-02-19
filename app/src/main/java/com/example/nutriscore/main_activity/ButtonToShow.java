@@ -1,4 +1,4 @@
-package com.example.nutriscore;
+package com.example.nutriscore.main_activity;
 
 import android.view.View;
 import android.view.animation.AlphaAnimation;

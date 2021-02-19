@@ -1,14 +1,13 @@
-package com.example.nutriscore;
+package com.example.nutriscore.main_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.nutriscore.R;
 
 public class MainActivity extends AppCompatActivity {
     public final int BUTTON_TO_SHOW_FADE_OUT_DURATION = 1000;
