@@ -32,7 +32,7 @@ public class ScoreTabelle {
         }
     }
 
-    public int get(float input) {
+    public int get(double input) {
         for (int i = 0; i < scores.size(); i++) {
             if (input <= bounds.get(i)) {
                 return scores.get(i);

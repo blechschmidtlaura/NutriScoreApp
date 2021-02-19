@@ -14,44 +14,52 @@ public class NutriScore {
     private static final ScoreTabelle ballaststoffeScore = new ScoreTabelle(FileManager.getPathToFileString("Ballaststoffe.txt"));
     private static final ScoreTabelle eiweissScore = new ScoreTabelle(FileManager.getPathToFileString("Eiweiss.txt"));
 
-    public static double calculateScore(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
+    public static double calculateScore(Food food) {
+        int energie = food.getEnergie();
+        double zucker = food.getZucker();
+        double gesFettsaeuren = food.getGesFettsaeuren();
+        double natrium = food.getNatrium();
+        int fruechteGemuese = food.getFruechteGemuese();
+        double ballaststoffe = food.getBallaststoffe();
+        double eiweiss = food.getEiweiss();
 
         double score = 0;
         double punkte = energie + zucker + gesFettsaeuren + natrium;
         if (punkte >= 11 && (fruechteGemuese >= -4 && fruechteGemuese <= -1)) {
             score = energieScore.get(energie) +
-                    zuckerScore.get((float) zucker) +
-                    gesFettsaeurenScore.get((float) gesFettsaeuren) +
-                    natriumScore.get((float) natrium) +
+                    zuckerScore.get(zucker) +
+                    gesFettsaeurenScore.get(gesFettsaeuren) +
+                    natriumScore.get(natrium) +
                     fruechteGemueseScore.get(fruechteGemuese) +
-                    ballaststoffeScore.get((float) ballaststoffe);
+                    ballaststoffeScore.get(ballaststoffe);
         }else{
             score = energieScore.get(energie) +
-                    zuckerScore.get((float) zucker) +
-                    gesFettsaeurenScore.get((float) gesFettsaeuren) +
-                    natriumScore.get((float) natrium) +
+                    zuckerScore.get(zucker) +
+                    gesFettsaeurenScore.get(gesFettsaeuren) +
+                    natriumScore.get(natrium) +
                     fruechteGemueseScore.get(fruechteGemuese) +
-                    ballaststoffeScore.get((float) ballaststoffe) +
-                    eiweissScore.get((float) eiweiss);
+                    ballaststoffeScore.get((ballaststoffe) +
+                    eiweissScore.get(eiweiss);
         }
         return score;
     }
 
-    private static String nutriValue(int value){
+    private static char nutriValue(int value){
         if(value <=-1) {
-            return "A";
+            return 'A';
         }else if(value <=2){
-            return "B";
+            return 'B';
         }else if(value <= 10){
-            return "C";
+            return 'C';
         }else if(value <= 18){
-            return "D";
+            return 'D';
         }else{
-            return "E";
+            return 'E';
         }
     }
 
-    public static int getScore(int amountSugar) {
-        return 0;
+    public static char getScore(Food food) {
+        int score = (int) calculateScore(food);
+        return nutriValue(score);
     }
 }

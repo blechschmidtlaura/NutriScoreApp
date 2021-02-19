@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.RequiresApi;
 
 import com.example.nutriscore.R;
+import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
 
 public class CalculateButton {
@@ -22,7 +23,8 @@ public class CalculateButton {
     public void onClick(View v) {
         // TODO: manage not integer Inputs
         int amountSugar = Integer.parseInt(this.mainActivity.sugarInput.getText().toString());
-        String score = String.valueOf(NutriScore.getScore(amountSugar));
+        Food food = new Food(amountSugar);
+        char score = NutriScore.getScore(food);
         this.mainActivity.nutriScoreTextView.setText(this.mainActivity.getString(R.string.dein_nutri_score) + score);
         this.hideKeyboard(this.mainActivity.nutriScoreTextView);
     }
