@@ -38,7 +38,7 @@ public class NutriScore {
                     gesFettsaeurenScore.get(gesFettsaeuren) +
                     natriumScore.get(natrium) +
                     fruechteGemueseScore.get(fruechteGemuese) +
-                    ballaststoffeScore.get((ballaststoffe) +
+                    ballaststoffeScore.get(ballaststoffe) +
                     eiweissScore.get(eiweiss);
         }
         return score;
