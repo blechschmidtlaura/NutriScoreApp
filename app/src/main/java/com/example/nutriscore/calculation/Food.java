@@ -1,5 +1,7 @@
 package com.example.nutriscore.calculation;
 
+import java.util.List;
+
 public class Food {
     private final int energie;
     private final double zucker;
@@ -17,6 +19,10 @@ public class Food {
         this.fruechteGemuese = fruechteGemuese;
         this.ballaststoffe = ballaststoffe;
         this.eiweiss = eiweiss;
+    }
+
+    public Food(List<Double> doubles){
+        this(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
     }
 
     public Food(double zucker) {

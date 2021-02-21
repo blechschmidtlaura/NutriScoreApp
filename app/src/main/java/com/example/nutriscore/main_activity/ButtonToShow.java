@@ -3,6 +3,7 @@ package com.example.nutriscore.main_activity;
 import android.os.Build;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 
@@ -11,7 +12,6 @@ import java.util.List;
 public class ButtonToShow {
     private MainActivity mainActivity;
     private List<View> viewsToMakeVisible;
-
     public ButtonToShow(MainActivity mainActivity, List<View> viewsToMakeVisible) {
         this.mainActivity = mainActivity;
         this.viewsToMakeVisible = viewsToMakeVisible;

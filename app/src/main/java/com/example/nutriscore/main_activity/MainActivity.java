@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public Button calculate;
 
     public List<View> viewsToMakeVisible = new LinkedList<>();
+    public List<EditText> textInputs = new LinkedList<>();
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.findViews();
         this.viewsToMakeVisible = List.of(this.sugarInput, this.energyInput, this.fibreInput, this.fruitVegetableInput, this.greaseInput, this.natriumInput, this.proteinInput, this.calculate);
+        this.textInputs = List.of(this.energyInput, this.sugarInput, this.greaseInput, this.natriumInput, this.fruitVegetableInput, this.fibreInput, this.proteinInput);
         ButtonToShow btn= new ButtonToShow(this, viewsToMakeVisible);
-        CalculateButton calculateButton = new CalculateButton(this);
+        CalculateButton calculateButton = new CalculateButton(this, textInputs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
