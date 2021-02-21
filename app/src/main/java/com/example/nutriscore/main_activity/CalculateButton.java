@@ -22,8 +22,15 @@ public class CalculateButton {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClick(View v) {
         // TODO: manage not integer Inputs
+        // TODO: improve  use List to get all values
         int amountSugar = Integer.parseInt(this.mainActivity.sugarInput.getText().toString());
-        Food food = new Food(amountSugar);
+        int amountGrease = Integer.parseInt(this.mainActivity.greaseInput.getText().toString());
+        int amountFibre = Integer.parseInt(this.mainActivity.fibreInput.getText().toString());
+        int amountFruitVegetable = Integer.parseInt(this.mainActivity.fruitVegetableInput.getText().toString());
+        int amountNatrium = Integer.parseInt(this.mainActivity.natriumInput.getText().toString());
+        int amountProtein = Integer.parseInt(this.mainActivity.proteinInput.getText().toString());
+        int amountEnergy = Integer.parseInt(this.mainActivity.energyInput.getText().toString());
+        Food food = new Food(amountEnergy, amountSugar, amountGrease, amountNatrium, amountFruitVegetable, amountFibre, amountProtein);
         NutriScore nutriScore = new NutriScore(mainActivity.getApplicationContext());
         char score = nutriScore.getScore(food);
         this.mainActivity.nutriScoreTextView.setText(this.mainActivity.getString(R.string.dein_nutri_score) + score);
