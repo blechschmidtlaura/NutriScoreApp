@@ -14,6 +14,12 @@ public class ButtonToShow {
     public void onClick(View v) {
         this.fadeOutView(this.mainActivity.buttonToShow, this.mainActivity.BUTTON_TO_SHOW_FADE_OUT_DURATION);
         this.mainActivity.sugarInput.setVisibility(View.VISIBLE);
+        this.mainActivity.energyInput.setVisibility(View.VISIBLE);
+        this.mainActivity.greaseInput.setVisibility(View.VISIBLE);
+        this.mainActivity.natriumInput.setVisibility(View.VISIBLE);
+        this.mainActivity.fruitVegetableInput.setVisibility(View.VISIBLE);
+        this.mainActivity.fibreInput.setVisibility(View.VISIBLE);
+        this.mainActivity.proteinInput.setVisibility(View.VISIBLE);
         this.mainActivity.calculate.setVisibility(View.VISIBLE);
         this.mainActivity.buttonToShow.setVisibility(View.INVISIBLE);
     }

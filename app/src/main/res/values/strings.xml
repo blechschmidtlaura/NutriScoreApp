@@ -5,4 +5,10 @@
     <string name="klick_mich">Klick mich!</string>
     <string name="auswerten">auswerten</string>
     <string name="dein_nutri_score">Dein Nutri-Score: </string>
+    <string name="fettgehalt_eingeben">Fettgehalt eingeben</string>
+    <string name="eiwei_e_eingeben">Eiweiße eingeben</string>
+    <string name="energie_eingeben">Energie eingeben</string>
+    <string name="natriummenge_eingeben">Natriummenge eingeben</string>
+    <string name="anteil_fr_chte_gem_se">Anteil Früchte / Gemüse</string>
+    <string name="ballaststoffe_eingeben">Ballaststoffe eingeben</string>
 </resources>
