@@ -26,9 +26,13 @@ public class ElasticsearchHandler {
         return new JSONObject(responseBody.string());
     }
 
+    private static boolean hasValue(JSONObject product, String key) throws JSONException {
+        return !product.isNull(key) && !product.getString(key).equals("");
+    }
+
     private static String getValue(JSONObject product, String... keys) throws JSONException {
         for (String key : keys) {
-            if (!product.isNull(key) && !product.getString(key).equals("")) {
+            if (hasValue(product, key)) {
                 return product.getString(key);
             }
         }
@@ -47,12 +51,12 @@ public class ElasticsearchHandler {
         final JSONObject product = hits.getJSONObject(0).getJSONObject("_source");
 
         final int energy_kJ = Integer.parseInt(getValue(product, "energy-kj_100g", "energy_100g"));
-        final double sugar_g = Double.parseDouble(getValue(product, "sugars_100g"));
-        final double saturatedFat_g = Double.parseDouble(getValue(product, "saturated-fat_100g"));
-        final double salt_mg = Double.parseDouble(getValue(product, "salt_100g")) * 1000;
+        final double sugar_g = Double.parseDouble(product.getString("sugars_100g"));
+        final double saturatedFat_g = Double.parseDouble(product.getString("saturated-fat_100g"));
+        final double salt_mg = Double.parseDouble(product.getString("salt_100g")) * 1000;
         final int fruitsVegetablesNuts_perc = Integer.parseInt(getValue(product, "fruits-vegetables-nuts_100g", "fruits-vegetables-nuts-estimate_100g"));
-        final double dietaryFiber_g = Double.parseDouble(getValue(product, "fiber_100g"));
-        final double protein_g = Double.parseDouble(getValue(product, "proteins_100g"));
+        final double dietaryFiber_g = hasValue(product, "fiber_100g") ? Double.parseDouble(product.getString("fiber_100g")) : 0.0;
+        final double protein_g = Double.parseDouble(product.getString("proteins_100g"));
 
         return new Food(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g);
     }
