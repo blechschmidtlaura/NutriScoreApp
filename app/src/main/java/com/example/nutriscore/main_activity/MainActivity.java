@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.nutriscore.R;
+import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public EditText fibreInput;
     public EditText proteinInput;
     public Button calculate;
+    public Button buttonScanner;
 
     public List<View> viewsToMakeVisible = new LinkedList<>();
     public List<EditText> textInputs = new LinkedList<>();
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         this.textInputs = List.of(this.energyInput, this.sugarInput, this.greaseInput, this.natriumInput, this.fruitVegetableInput, this.fibreInput, this.proteinInput);
         ButtonToShow btn= new ButtonToShow(this, viewsToMakeVisible);
         CalculateButton calculateButton = new CalculateButton(this, textInputs);
+
+        this.buttonScanner.setOnClickListener(this::changeActivity);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -55,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         this.proteinInput = findViewById(R.id.InputProtein);
         this.buttonToShow = findViewById(R.id.button);
         this.calculate = findViewById(R.id.button2);
+        this.buttonScanner = findViewById(R.id.scannerButton);
+    }
+
+    protected void changeActivity(View v){
+        Intent intent = new Intent(this, BarCodeScanner.class);
+        startActivity(intent);
     }
 
 }
