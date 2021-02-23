@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Arrays;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -26,21 +26,35 @@ public class ElasticsearchHandler {
         return new JSONObject(responseBody.string());
     }
 
-    public static JSONObject getProductByEAN(String ean) throws IOException, JSONException {
+    private static String getValue(JSONObject product, String... keys) throws JSONException {
+        for (String key : keys) {
+            if (!product.isNull(key) && !product.getString(key).equals("")) {
+                return product.getString(key);
+            }
+        }
+        throw new IllegalArgumentException("The product doesn't have values for the keys " + Arrays.toString(keys));
+    }
+
+    public static Food getFoodByEAN(String ean) throws IOException, JSONException {
         ean = ean.replaceAll(" ", "");
 
         final JSONObject response = sendPostRequest("{ \"query\": { \"term\": { \"code\": \"" + ean + "\" } } }");
-        final JSONObject hit = response.getJSONObject("hits").getJSONArray("hits").getJSONObject(0);
-        return hit.getJSONObject("_source");
-    }
-
-    public static JSONArray searchProductsByName(String name) throws IOException, JSONException {
-        final JSONObject response = sendPostRequest("{ \"query\": { \"match\": { \"product_name\": \"" + name + "\" } } }");
         final JSONArray hits = response.getJSONObject("hits").getJSONArray("hits");
-        for (int i = 0; i < hits.length(); i++) {
-            hits.put(i, hits.getJSONObject(i).getJSONObject("_source"));
+        if (hits.length() == 0) {
+            throw new IllegalArgumentException("Couldn't find product with the given EAN.");
         }
-        return hits;
+
+        final JSONObject product = hits.getJSONObject(0).getJSONObject("_source");
+
+        final int energy_kJ = Integer.parseInt(getValue(product, "energy-kj_100g", "energy_100g"));
+        final double sugar_g = Double.parseDouble(getValue(product, "sugars_100g"));
+        final double saturatedFat_g = Double.parseDouble(getValue(product, "saturated-fat_100g"));
+        final double salt_mg = Double.parseDouble(getValue(product, "salt_100g")) * 1000;
+        final int fruitsVegetablesNuts_perc = Integer.parseInt(getValue(product, "fruits-vegetables-nuts_100g", "fruits-vegetables-nuts-estimate_100g"));
+        final double dietaryFiber_g = Double.parseDouble(getValue(product, "fiber_100g"));
+        final double protein_g = Double.parseDouble(getValue(product, "proteins_100g"));
+
+        return new Food(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g);
     }
 }
 

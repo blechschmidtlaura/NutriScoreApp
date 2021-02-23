@@ -15,7 +15,6 @@ import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,9 +45,9 @@ public class CalculateButton {
         Executors.newSingleThreadExecutor().submit(() -> {
             final String ean = "20150907";
             try {
-                final JSONObject product = ElasticsearchHandler.getProductByEAN(ean);
-                final String name = product.getString("product_name");
-                mainActivity.runOnUiThread(() -> Toast.makeText(mainActivity, name, Toast.LENGTH_LONG).show());
+                final Food food = ElasticsearchHandler.getFoodByEAN(ean);
+                final String score = String.valueOf(new NutriScore(mainActivity.getApplicationContext()).calculateScore(food));
+                mainActivity.runOnUiThread(() -> Toast.makeText(mainActivity, score, Toast.LENGTH_LONG).show());
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
