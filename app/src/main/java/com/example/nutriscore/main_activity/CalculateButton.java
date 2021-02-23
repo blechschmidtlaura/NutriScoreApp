@@ -10,10 +10,16 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.example.nutriscore.R;
+import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class CalculateButton {
@@ -36,6 +42,17 @@ public class CalculateButton {
         }catch(NumberFormatException e){
             Toast.makeText(this.mainActivity.getApplicationContext(), "Die Eingegebenen müssen Strings sein!", Toast.LENGTH_SHORT).show();
         }
+
+        Executors.newSingleThreadExecutor().submit(() -> {
+            final String ean = "20150907";
+            try {
+                final JSONObject product = ElasticsearchHandler.getProductByEAN(ean);
+                final String name = product.getString("product_name");
+                mainActivity.runOnUiThread(() -> Toast.makeText(mainActivity, name, Toast.LENGTH_LONG).show());
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

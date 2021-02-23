@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -25,26 +26,21 @@ public class ElasticsearchHandler {
         return new JSONObject(responseBody.string());
     }
 
-    public static JSONObject getProductByEAN(String ean) {
+    public static JSONObject getProductByEAN(String ean) throws IOException, JSONException {
         ean = ean.replaceAll(" ", "");
 
-        try {
-            final JSONObject response = sendPostRequest("{ \"query\": { \"term\": { \"code\": \"" + ean + "\" } } }");
-            return response.getJSONObject("hits").getJSONArray("hits").getJSONObject(0);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
+        final JSONObject response = sendPostRequest("{ \"query\": { \"term\": { \"code\": \"" + ean + "\" } } }");
+        final JSONObject hit = response.getJSONObject("hits").getJSONArray("hits").getJSONObject(0);
+        return hit.getJSONObject("_source");
     }
 
-    public static JSONArray searchProductsByName(String name) {
-        try {
-            final JSONObject response = sendPostRequest("{ \"query\": { \"match\": { \"product_name\": \"" + name + "\" } } }");
-            return response.getJSONObject("hits").getJSONArray("hits");
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            return null;
+    public static JSONArray searchProductsByName(String name) throws IOException, JSONException {
+        final JSONObject response = sendPostRequest("{ \"query\": { \"match\": { \"product_name\": \"" + name + "\" } } }");
+        final JSONArray hits = response.getJSONObject("hits").getJSONArray("hits");
+        for (int i = 0; i < hits.length(); i++) {
+            hits.put(i, hits.getJSONObject(i).getJSONObject("_source"));
         }
+        return hits;
     }
 }
 
