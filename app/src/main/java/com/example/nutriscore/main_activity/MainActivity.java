@@ -3,7 +3,6 @@ package com.example.nutriscore.main_activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     protected void findViews(){
-        this.nutriScoreTextView = findViewById(R.id.textView1);
+        this.nutriScoreTextView = findViewById(R.id.nutriScoreShower);
         this.sugarInput = findViewById(R.id.InputSugar);
         this.energyInput = findViewById(R.id.InputEnergy);
         this.greaseInput = findViewById(R.id.InputGrease);
@@ -58,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         this.fruitVegetableInput = findViewById(R.id.InputFruitVegetable);
         this.fibreInput = findViewById(R.id.InputFibre);
         this.proteinInput = findViewById(R.id.InputProtein);
-        this.buttonToShow = findViewById(R.id.button);
-        this.calculate = findViewById(R.id.button2);
+        this.buttonToShow = findViewById(R.id.showButton);
+        this.calculate = findViewById(R.id.calculateNutriScoreButton);
         this.buttonScanner = findViewById(R.id.scannerButton);
     }
 

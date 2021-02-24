@@ -10,7 +10,7 @@
     >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/nutriScoreShower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.915" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/showButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/button_background_color"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0.279" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/calculateNutriScoreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/button_background_color"
@@ -159,8 +159,13 @@
         android:id="@+id/scannerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="Scanner"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="33dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toEndOf="@+id/startCamera"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
