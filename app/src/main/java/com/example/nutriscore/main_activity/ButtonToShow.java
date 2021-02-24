@@ -27,6 +27,8 @@ public class ButtonToShow {
         this.mainActivity.buttonToShow.setOnClickListener(this::onClick);
     }
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClick(View v) {
         this.fadeOutView(this.mainActivity.buttonToShow, this.mainActivity.BUTTON_TO_SHOW_FADE_OUT_DURATION);
@@ -39,13 +41,7 @@ public class ButtonToShow {
             try {
                 final Food food = ElasticsearchHandler.getFoodByEAN(ean);
                 mainActivity.runOnUiThread(() -> {
-                    ((EditText) viewsToMakeVisible.get(0)).setText(String.valueOf(food.getZucker()));
-                    ((EditText) viewsToMakeVisible.get(1)).setText(String.valueOf(food.getEnergie()));
-                    ((EditText) viewsToMakeVisible.get(2)).setText(String.valueOf(food.getBallaststoffe()));
-                    ((EditText) viewsToMakeVisible.get(3)).setText(String.valueOf(food.getFruechteGemuese()));
-                    ((EditText) viewsToMakeVisible.get(4)).setText(String.valueOf(food.getGesFettsaeuren()));
-                    ((EditText) viewsToMakeVisible.get(5)).setText(String.valueOf(food.getNatrium()));
-                    ((EditText) viewsToMakeVisible.get(6)).setText(String.valueOf(food.getEiweiss()));
+                    mainActivity.autoFillFood(food);
                 });
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

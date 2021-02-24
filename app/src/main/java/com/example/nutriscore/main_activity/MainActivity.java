@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.nutriscore.R;
 import com.example.nutriscore.barcode_scanner.BarCodeScanner;
+import com.example.nutriscore.calculation.Food;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     public List<View> viewsToMakeVisible = new LinkedList<>();
     public List<EditText> textInputs = new LinkedList<>();
-    public List<TextView> textsToMakeVisible = new LinkedList<>();
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,37 @@ public class MainActivity extends AppCompatActivity {
         CalculateButton calculateButton = new CalculateButton(this, textInputs);
 
         this.buttonScanner.setOnClickListener(this::changeActivity);
+        System.out.println("On Create");
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void scannerChange(){
+        System.out.println("Scanner Change");
+        Intent intent = getIntent();
+        if(intent.hasExtra("food")) {
+            System.out.println("has Extra!!");
+            Food f = intent.getExtras().getParcelable("food");
+            this.autoFillFood(f);
+            this.viewsToMakeVisible.forEach(view -> view.setVisibility(View.VISIBLE));
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.scannerChange();
+    }
+
+    public void autoFillFood(Food food){
+        ((EditText) viewsToMakeVisible.get(0)).setText(String.valueOf(food.getZucker()));
+        ((EditText) viewsToMakeVisible.get(1)).setText(String.valueOf(food.getEnergie()));
+        ((EditText) viewsToMakeVisible.get(2)).setText(String.valueOf(food.getBallaststoffe()));
+        ((EditText) viewsToMakeVisible.get(3)).setText(String.valueOf(food.getFruechteGemuese()));
+        ((EditText) viewsToMakeVisible.get(4)).setText(String.valueOf(food.getGesFettsaeuren()));
+        ((EditText) viewsToMakeVisible.get(5)).setText(String.valueOf(food.getNatrium()));
+        ((EditText) viewsToMakeVisible.get(6)).setText(String.valueOf(food.getEiweiss()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)

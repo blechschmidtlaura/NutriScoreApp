@@ -36,7 +36,8 @@ public class ElasticsearchHandler {
                 return product.getString(key);
             }
         }
-        throw new IllegalArgumentException("The product doesn't have values for the keys " + Arrays.toString(keys));
+        return "0";
+        // TODO ich habe das geändert weil das Produkt nicht die FrüchteGemüseNüsse hat
     }
 
     public static Food getFoodByEAN(String ean) throws IOException, JSONException {
