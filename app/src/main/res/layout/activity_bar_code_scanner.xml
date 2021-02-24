@@ -6,39 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".barcode_scanner.BarCodeScanner">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <SurfaceView
+        android:id="@+id/camera_view"
+        android:layout_width="405dp"
+        android:layout_height="723dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/barCode"
+        android:layout_width="175dp"
+        android:layout_height="79dp"
+        android:text="TextView"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintVertical_bias="0.811" />
 
-        <SurfaceView
-            android:id="@+id/camera_view"
-            android:layout_width="640px"
-            android:layout_height="480px"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:id="@+id/txtContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" code reader" />
-
-        <Button
-            android:id="@+id/startCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="Process" />
-
-        <ImageView
-            android:id="@+id/imgview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
