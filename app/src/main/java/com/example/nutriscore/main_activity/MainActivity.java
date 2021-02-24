@@ -30,16 +30,24 @@ public class MainActivity extends AppCompatActivity {
     public EditText proteinInput;
     public Button calculate;
     public Button buttonScanner;
+    public TextView energyText;
+    public TextView sugarText;
+    public TextView greaseText;
+    public TextView natriumText;
+    public TextView fruitText;
+    public TextView fibreText;
+    public TextView proteinText;
 
     public List<View> viewsToMakeVisible = new LinkedList<>();
     public List<EditText> textInputs = new LinkedList<>();
+    public List<TextView> textsToMakeVisible = new LinkedList<>();
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.findViews();
-        this.viewsToMakeVisible = List.of(this.sugarInput, this.energyInput, this.fibreInput, this.fruitVegetableInput, this.greaseInput, this.natriumInput, this.proteinInput, this.calculate);
+        this.viewsToMakeVisible = List.of(this.sugarInput, this.energyInput, this.fibreInput, this.fruitVegetableInput, this.greaseInput, this.natriumInput, this.proteinInput, this.calculate, this.energyText, this.sugarText, this.greaseText, this.fibreText, this.fruitText, this.natriumText, this.proteinText);
         this.textInputs = List.of(this.energyInput, this.sugarInput, this.greaseInput, this.natriumInput, this.fruitVegetableInput, this.fibreInput, this.proteinInput);
         ButtonToShow btn= new ButtonToShow(this, viewsToMakeVisible);
         CalculateButton calculateButton = new CalculateButton(this, textInputs);
@@ -60,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         this.buttonToShow = findViewById(R.id.showButton);
         this.calculate = findViewById(R.id.calculateNutriScoreButton);
         this.buttonScanner = findViewById(R.id.scannerButton);
+
+        this.energyText = findViewById(R.id.TextEnergy);
+        this.sugarText = findViewById(R.id.TextSugar);
+        this.greaseText = findViewById(R.id.TextGrease);
+        this.natriumText = findViewById(R.id.TextNatrium);
+        this.fruitText = findViewById(R.id.TextFruitVegetable);
+        this.fibreText = findViewById(R.id.TextFibre);
+        this.proteinText = findViewById(R.id.TextProtein);
     }
 
     protected void changeActivity(View v){

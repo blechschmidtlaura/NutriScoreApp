@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Nutri Score</string>
-    <string name="hello_laura">Hello laura</string>
     <string name="zuckermenge_eingeben">Zuckermenge eingeben</string>
-    <string name="klick_mich">Klick mich!</string>
+    <string name="klick_mich">Werteeingabe</string>
     <string name="auswerten">auswerten</string>
     <string name="dein_nutri_score">Dein Nutri-Score: </string>
     <string name="fettgehalt_eingeben">Fettgehalt eingeben</string>
@@ -11,4 +10,13 @@
     <string name="natriummenge_eingeben">Natriummenge eingeben</string>
     <string name="anteil_fr_chte_gem_se">Anteil Früchte / Gemüse</string>
     <string name="ballaststoffe_eingeben">Ballaststoffe eingeben</string>
+    <string name="barcode_eingeben">Barcode eingeben</string>
+    <string name="barcode">Barcode:</string>
+    <string name="energie">Energie:</string>
+    <string name="zucker">Zucker:</string>
+    <string name="fett">Fett:</string>
+    <string name="natrium">Natrium:</string>
+    <string name="frucht_nuss">Frucht/Nuss:</string>
+    <string name="ballaststoffe">Ballaststoffe:</string>
+    <string name="eiwei">Eiweiß:</string>
 </resources>
