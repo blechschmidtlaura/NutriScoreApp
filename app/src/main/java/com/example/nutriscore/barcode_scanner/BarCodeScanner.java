@@ -2,6 +2,7 @@ package com.example.nutriscore.barcode_scanner;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -47,20 +48,17 @@ public class BarCodeScanner extends AppCompatActivity {
     TextView barcodeInfo;
     SurfaceView cameraView;
     CameraSource cameraSource;
-    Button startButton;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
+    private static BarCodeScanner instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_code_scanner);
+        instance = this;
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
         barcodeInfo = (TextView) findViewById(R.id.barCode);
         startCamera();
-    }
-
-    protected void onClick(View v) {
-        this.startCamera();
     }
 
 
@@ -121,10 +119,16 @@ public class BarCodeScanner extends AppCompatActivity {
                             barcodeInfo.setText(    // Update the TextView
                                     barcodes.valueAt(0).displayValue
                             );
+
                         }
                     });
+                    Intent changeActivity = new Intent(BarCodeScanner.instance, MainActivity.class);
+                    startActivity(changeActivity);
                 }
+
+
             }
         });
+
     }
 }
