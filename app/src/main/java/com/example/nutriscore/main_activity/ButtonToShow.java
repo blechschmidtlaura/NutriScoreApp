@@ -39,7 +39,7 @@ public class ButtonToShow {
             // TODO: Get EAN from text field
             final String ean = "20150907";
             try {
-                final Food food = ElasticsearchHandler.getFoodByEAN(ean);
+                final Food food = ElasticsearchHandler.getFoodByEAN(ean).get();
                 mainActivity.runOnUiThread(() -> {
                     mainActivity.autoFillFood(food);
                 });

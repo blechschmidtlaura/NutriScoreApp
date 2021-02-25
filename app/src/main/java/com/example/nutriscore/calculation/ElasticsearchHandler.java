@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -40,13 +41,13 @@ public class ElasticsearchHandler {
         // TODO ich habe das geändert weil das Produkt nicht die FrüchteGemüseNüsse hat
     }
 
-    public static Food getFoodByEAN(String ean) throws IOException, JSONException {
+    public static Optional<Food> getFoodByEAN(String ean) throws IOException, JSONException, IllegalArgumentException {
         ean = ean.replaceAll(" ", "");
 
         final JSONObject response = sendPostRequest("{ \"query\": { \"term\": { \"code\": \"" + ean + "\" } } }");
         final JSONArray hits = response.getJSONObject("hits").getJSONArray("hits");
         if (hits.length() == 0) {
-            throw new IllegalArgumentException("Couldn't find product with the given EAN.");
+            return Optional.empty();
         }
 
         final JSONObject product = hits.getJSONObject(0).getJSONObject("_source");
@@ -59,7 +60,7 @@ public class ElasticsearchHandler {
         final double dietaryFiber_g = hasValue(product, "fiber_100g") ? Double.parseDouble(product.getString("fiber_100g")) : 0.0;
         final double protein_g = Double.parseDouble(product.getString("proteins_100g"));
 
-        return new Food(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g);
+        return Optional.of(new Food(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
     }
 }
 

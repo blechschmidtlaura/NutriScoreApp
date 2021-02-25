@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.util.Log;
 import android.util.SparseArray;
@@ -27,6 +28,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
@@ -47,6 +49,9 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 public class BarCodeScanner extends AppCompatActivity {
 
@@ -141,15 +146,13 @@ public class BarCodeScanner extends AppCompatActivity {
     }
 
     protected static void changeToMain(Intent intent, Activity a, String ean){
-        final Food[] food = new Food[1];
+        final List<Optional<Food>> food = new LinkedList<>();
         Thread t1 = new Thread(new Runnable() {
             @Override
-            public void run() {
+            public void run() throws IllegalArgumentException{
                 try {
-                    food[0] = ElasticsearchHandler.getFoodByEAN(ean);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                    food.add(ElasticsearchHandler.getFoodByEAN(ean));
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -160,8 +163,13 @@ public class BarCodeScanner extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        intent.putExtra("food", (Parcelable) food[0]);
-        a.startActivity(intent);
+        Optional<Food> optionalFood = food.get(0);
+        if (optionalFood.isPresent()) {
+            intent.putExtra("food", (Parcelable) optionalFood.get());
+            a.startActivity(intent);
+        }else{
+            Toast.makeText(a.getApplicationContext(), "Fehler!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
