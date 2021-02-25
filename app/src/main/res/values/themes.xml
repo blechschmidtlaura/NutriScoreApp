@@ -14,4 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/button_background_color</item>
     </style>
+    <style name="EditText">
+        <item name="android:layout_width">150dp</item>
+    </style>
 </resources>

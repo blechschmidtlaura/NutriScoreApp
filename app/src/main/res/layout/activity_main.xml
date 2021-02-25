@@ -24,13 +24,13 @@
         android:id="@+id/showButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="20dp"
         android:backgroundTint="@color/button_background_color"
         android:text="@string/klick_mich"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.139"
+        app:layout_constraintVertical_bias="0.038"
         app:strokeColor="#184704" />
 
     <Button
@@ -61,71 +61,7 @@
         app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868" />
-
-    <EditText
-        android:id="@+id/InputProtein"
-        android:layout_width="@dimen/edit_width"
-        android:layout_height="@dimen/edit_height"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/eiwei_e_eingeben"
-        android:inputType="number"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.796"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
-
-    <EditText
-        android:id="@+id/InputFibre"
-        android:layout_width="@dimen/edit_width"
-        android:layout_height="@dimen/edit_height"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/ballaststoffe_eingeben"
-        android:inputType="number"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/InputProtein"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.796"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964" />
-
-    <EditText
-        android:id="@+id/InputFruitVegetable"
-        android:layout_width="@dimen/edit_width"
-        android:layout_height="@dimen/edit_height"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/anteil_fr_chte_gem_se"
-        android:inputType="number"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/InputFibre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.796"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.952" />
-
-    <EditText
-        android:id="@+id/InputGrease"
-        android:layout_width="@dimen/edit_width"
-        android:layout_height="@dimen/edit_height"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/fettgehalt_eingeben"
-        android:inputType="number"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/InputNatrium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.796"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.928" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/InputSugar"
@@ -141,7 +77,23 @@
         app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.903" />
+        app:layout_constraintVertical_bias="0.919" />
+
+    <EditText
+        android:id="@+id/InputGrease"
+        android:layout_width="@dimen/edit_width"
+        android:layout_height="@dimen/edit_height"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/fettgehalt_eingeben"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/InputNatrium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.929" />
 
     <EditText
         android:id="@+id/InputNatrium"
@@ -157,18 +109,67 @@
         app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.946" />
+        app:layout_constraintVertical_bias="0.95" />
+
+    <EditText
+        android:id="@+id/InputFruitVegetable"
+        android:layout_width="@dimen/edit_width"
+        android:layout_height="@dimen/edit_height"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/anteil_fr_chte_gem_se"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/InputFibre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.954" />
+
+    <EditText
+        android:id="@+id/InputFibre"
+        android:layout_width="@dimen/edit_width"
+        android:layout_height="@dimen/edit_height"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/ballaststoffe_eingeben"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/InputProtein"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.951" />
+
+    <EditText
+        android:id="@+id/InputProtein"
+        android:layout_width="@dimen/edit_width"
+        android:layout_height="@dimen/edit_height"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/eiwei_e_eingeben"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.681" />
 
     <Button
         android:id="@+id/scannerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
         android:text="Scanner"
         app:layout_constraintBottom_toTopOf="@+id/InputEnergy"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.765"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.655" />
 
     <TextView
         android:id="@+id/textView"
@@ -177,7 +178,7 @@
         android:text="@string/barcode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.773" />
@@ -205,23 +206,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.274" />
-
-    <TextView
-        android:id="@+id/TextSugar"
-        android:layout_width="@dimen/edit_width"
-        android:layout_height="@dimen/edit_height"
-        android:text="@string/zucker"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.352" />
+        app:layout_constraintVertical_bias="0.127" />
 
     <TextView
         android:id="@+id/TextGrease"
@@ -231,10 +219,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintVertical_bias="0.309" />
 
     <TextView
         android:id="@+id/TextNatrium"
@@ -244,10 +232,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.494" />
+        app:layout_constraintVertical_bias="0.38" />
 
     <TextView
         android:id="@+id/TextFruitVegetable"
@@ -257,10 +245,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558" />
+        app:layout_constraintVertical_bias="0.481" />
 
     <TextView
         android:id="@+id/TextFibre"
@@ -270,10 +258,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621" />
+        app:layout_constraintVertical_bias="0.578" />
 
     <TextView
         android:id="@+id/TextProtein"
@@ -283,9 +271,22 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679" />
+        app:layout_constraintVertical_bias="0.681" />
+
+    <TextView
+        android:id="@+id/TextSugar"
+        android:layout_width="@dimen/edit_width"
+        android:layout_height="@dimen/edit_height"
+        android:text="@string/zucker"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.201" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
