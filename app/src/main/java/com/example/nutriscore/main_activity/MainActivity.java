@@ -52,17 +52,15 @@ public class MainActivity extends AppCompatActivity {
         ButtonToShow btn= new ButtonToShow(this, viewsToMakeVisible);
         CalculateButton calculateButton = new CalculateButton(this, textInputs);
 
-        this.buttonScanner.setOnClickListener(this::changeActivity);
+        this.buttonScanner.setOnClickListener(this::changeToBarcodeActivity);
         System.out.println("On Create");
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void scannerChange(){
-        System.out.println("Scanner Change");
         Intent intent = getIntent();
         if(intent.hasExtra("food")) {
-            System.out.println("has Extra!!");
             Food f = intent.getExtras().getParcelable("food");
             this.autoFillFood(f);
             this.viewsToMakeVisible.forEach(view -> view.setVisibility(View.VISIBLE));
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         this.proteinText = findViewById(R.id.TextProtein);
     }
 
-    protected void changeActivity(View v){
+    protected void changeToBarcodeActivity(View v){
         Intent intent = new Intent(this, BarCodeScanner.class);
         startActivity(intent);
     }

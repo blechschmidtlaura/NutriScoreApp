@@ -19,4 +19,5 @@
     <string name="frucht_nuss">Frucht/Nuss:</string>
     <string name="ballaststoffe">Ballaststoffe:</string>
     <string name="eiwei">Eiweiß:</string>
+    <string name="barcodeTextView">Barcode</string>
 </resources>

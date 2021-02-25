@@ -130,7 +130,6 @@ public class BarCodeScanner extends AppCompatActivity {
                     });
                     Intent intent = new Intent(BarCodeScanner.instance, MainActivity.class);
                     String ean = barcodes.valueAt(0).rawValue;
-                    System.out.println(ean);
                     BarCodeScanner.changeToMain(intent, instance, ean);
 
                 }

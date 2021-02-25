@@ -21,18 +21,11 @@ public class Food  implements Parcelable {
     public Food(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
         this.intitializeValues(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
     }
-    public void intitializeValues(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss){
-        this.energie = energie;
-        this.zucker = zucker;
-        this.gesFettsaeuren = gesFettsaeuren;
-        this.natrium = natrium;
-        this.fruechteGemuese = fruechteGemuese;
-        this.ballaststoffe = ballaststoffe;
-        this.eiweiss = eiweiss;
-    }
-    public void initializeValues(List<Double> doubles){
-        intitializeValues(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
 
+    private Food(Parcel in) {
+        List<Double> myList = new ArrayList<>();
+        in.readList(myList,List.class.getClassLoader());
+        initializeValues(myList);
     }
 
     public Food(List<Double> doubles){
@@ -41,6 +34,20 @@ public class Food  implements Parcelable {
 
     public Food(double zucker) {
         this(0, zucker, 0, 0, 0, 0, 0);
+    }
+
+    private void intitializeValues(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss){
+        this.energie = energie;
+        this.zucker = zucker;
+        this.gesFettsaeuren = gesFettsaeuren;
+        this.natrium = natrium;
+        this.fruechteGemuese = fruechteGemuese;
+        this.ballaststoffe = ballaststoffe;
+        this.eiweiss = eiweiss;
+    }
+
+    private void initializeValues(List<Double> doubles){
+        intitializeValues(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
     }
 
     public int getEnergie() {
@@ -92,9 +99,5 @@ public class Food  implements Parcelable {
         }
     };
 
-    private Food(Parcel in) {
-        List<Double> myList = new ArrayList<>();
-        in.readList(myList,List.class.getClassLoader());
-        initializeValues(myList);
-    }
+
 }
