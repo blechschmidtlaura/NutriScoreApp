@@ -7,20 +7,27 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nutriscore.R;
+import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
 
 public class NutriScoreResult extends AppCompatActivity {
     private TextView scoreView;
+    private Button scanButton;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutri_score_result);
         this.scoreView = findViewById(R.id.nutriScoreResult);
+        this.scanButton = findViewById(R.id.scanAgain);
+
+        this.scanButton.setOnClickListener(this::changeToBarcodeActivity);
         Intent intent = getIntent();
         int textColor;
         if (intent.hasExtra("food")){
@@ -51,5 +58,9 @@ public class NutriScoreResult extends AppCompatActivity {
             this.scoreView.setText(String.valueOf(score));
         }
 
+    }
+    protected void changeToBarcodeActivity(View v){
+        Intent intent = new Intent(this, BarCodeScanner.class);
+        startActivity(intent);
     }
 }

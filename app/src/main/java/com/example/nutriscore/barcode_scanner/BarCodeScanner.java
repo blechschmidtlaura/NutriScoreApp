@@ -90,7 +90,7 @@ public class BarCodeScanner extends AppCompatActivity {
                 .Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
-                .setRequestedPreviewSize(1920,1080)
+                .setRequestedPreviewSize(3840, 2160)
                 .build();
 
         SurfaceHolder holder = cameraView.getHolder();
