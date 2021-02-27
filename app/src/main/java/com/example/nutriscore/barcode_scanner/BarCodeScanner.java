@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
@@ -16,6 +17,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -32,6 +35,8 @@ import android.widget.Toast;
 
 import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
+import com.example.nutriscore.calculation.NutriScore;
+import com.example.nutriscore.result_view.NutriScoreResult;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -84,6 +89,8 @@ public class BarCodeScanner extends AppCompatActivity {
         cameraSource = new CameraSource
                 .Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
+                .setFacing(CameraSource.CAMERA_FACING_BACK)
+                .setRequestedPreviewSize(1920,1080)
                 .build();
 
         SurfaceHolder holder = cameraView.getHolder();
@@ -119,6 +126,7 @@ public class BarCodeScanner extends AppCompatActivity {
             public void release() {
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
 
@@ -135,13 +143,44 @@ public class BarCodeScanner extends AppCompatActivity {
                     });
                     Intent intent = new Intent(BarCodeScanner.instance, MainActivity.class);
                     String ean = barcodes.valueAt(0).rawValue;
-                    BarCodeScanner.changeToMain(intent, instance, ean);
+                    BarCodeScanner.changeToResult(instance, ean);
 
                 }
 
 
             }
         });
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected static void changeToResult(Activity a, String ean){
+        final List<Optional<Food>> food = new LinkedList<>();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() throws IllegalArgumentException{
+                try {
+                    food.add(ElasticsearchHandler.getFoodByEAN(ean));
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t1.start();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Optional<Food> optionalFood = food.get(0);
+        Food f;
+        if(optionalFood.isPresent()){
+            f = optionalFood.get();
+            Intent intent = new Intent(a, NutriScoreResult.class);
+            intent.putExtra("food", f);
+            a.startActivity(intent);
+        }
+
 
     }
 
