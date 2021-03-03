@@ -6,53 +6,360 @@
     android:layout_height="match_parent"
     tools:context=".result_view.NutriScoreResult">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="285dp"
-        android:layout_height="111dp"
-        android:text="Nutri Score Ergebnis"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.369"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Score"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.202"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.131" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="286dp">
 
-    <TextView
-        android:id="@+id/nutriScoreResult"
-        android:layout_width="129dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="184dp"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/scanAgain"
-        android:layout_width="266dp"
-        android:layout_height="106dp"
-        android:layout_marginBottom="244dp"
-        android:text="Scannen"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="285dp"
+                android:layout_height="111dp"
+                android:text="Nutri Score Ergebnis"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.369"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.049" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.202"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:layout_constraintVertical_bias="0.131" />
+
+            <TextView
+                android:id="@+id/nutriScoreResult"
+                android:layout_width="129dp"
+                android:layout_height="84dp"
+                android:layout_marginTop="184dp"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.54"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/scanAgain"
+                android:layout_width="266dp"
+                android:layout_height="106dp"
+                android:layout_marginBottom="244dp"
+                android:text="Scannen"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="756dp"
+                android:background="@color/app_background_color"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".main_activity.MainActivity"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/nutriScoreShower"
+                    android:layout_width="@dimen/textview_width"
+                    android:layout_height="@dimen/textview_height"
+                    android:layout_marginStart="136dp"
+                    android:text="@string/dein_nutri_score"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.936" />
+
+                <Button
+                    android:id="@+id/showButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:backgroundTint="@color/button_background_color"
+                    android:text="@string/klick_mich"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.038"
+                    app:strokeColor="#184704" />
+
+                <Button
+                    android:id="@+id/calculateNutriScoreButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/button_background_color"
+                    android:text="@string/auswerten"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.475"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.863" />
+
+                <EditText
+                    android:id="@+id/InputEnergy"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/energie_eingeben"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/InputSugar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <EditText
+                    android:id="@+id/InputSugar"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/zuckermenge_eingeben"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/InputGrease"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.919" />
+
+                <EditText
+                    android:id="@+id/InputGrease"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/fettgehalt_eingeben"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/InputNatrium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.929" />
+
+                <EditText
+                    android:id="@+id/InputNatrium"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/natriummenge_eingeben"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/InputFruitVegetable"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.95" />
+
+                <EditText
+                    android:id="@+id/InputFruitVegetable"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/anteil_fr_chte_gem_se"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/InputFibre"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.954" />
+
+                <EditText
+                    android:id="@+id/InputFibre"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/ballaststoffe_eingeben"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/InputProtein"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.951" />
+
+                <EditText
+                    android:id="@+id/InputProtein"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/eiwei_e_eingeben"
+                    android:inputType="number"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.681" />
+
+                <Button
+                    android:id="@+id/scannerButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scanner"
+                    app:layout_constraintBottom_toTopOf="@+id/InputEnergy"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.765"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.655" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/barcode"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.773" />
+
+                <EditText
+                    android:id="@+id/InputBarcode"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:ems="10"
+                    android:hint="@string/barcode_eingeben"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.796"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.773" />
+
+                <TextView
+                    android:id="@+id/TextEnergy"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/energie"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.127" />
+
+                <TextView
+                    android:id="@+id/TextGrease"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/fett"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.309" />
+
+                <TextView
+                    android:id="@+id/TextNatrium"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/natrium"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.38" />
+
+                <TextView
+                    android:id="@+id/TextFruitVegetable"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/frucht_nuss"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.481" />
+
+                <TextView
+                    android:id="@+id/TextFibre"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/ballaststoffe"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.578" />
+
+                <TextView
+                    android:id="@+id/TextProtein"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/eiwei"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.681" />
+
+                <TextView
+                    android:id="@+id/TextSugar"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="@dimen/edit_height"
+                    android:text="@string/zucker"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.114"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.201" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
