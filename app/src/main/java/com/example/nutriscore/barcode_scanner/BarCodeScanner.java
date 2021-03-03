@@ -104,6 +104,7 @@ public class BarCodeScanner extends AppCompatActivity {
                     } else {
                         ActivityCompat.requestPermissions(BarCodeScanner.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                        this.surfaceCreated(holder);
                     }
                 } catch (IOException ie) {
                     Log.e("CAMERA SOURCE", "LOOOOL" + ie.getMessage());
