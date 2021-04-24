@@ -16,6 +16,9 @@ import com.example.nutriscore.calculation.NutriScore;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Der Calculate Button berechnet beim Klicken den NutriScore der eingegebenen Nahrungswerte
+ */
 public class CalculateButton {
     private MainActivity mainActivity;
     private List<EditText> inputTexts;
@@ -25,6 +28,11 @@ public class CalculateButton {
         this.mainActivity.calculate.setOnClickListener(this::onClick);
     }
 
+    /**
+     * Onclick Listener wird beim Klicken aufgerufen
+     * Der NutriScore wird berechnet und angezeigt
+     * @param v
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClick(View v) {
         try {
@@ -53,6 +61,10 @@ public class CalculateButton {
     }
 
 
+    /**
+     * Die Tastatur wird ausgeblendet
+     * @param v  Die View
+     */
     public void hideKeyboard(View v) {
         InputMethodManager inputMethodManager = (InputMethodManager)this.mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);

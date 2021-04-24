@@ -16,6 +16,12 @@ import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
 
+/**
+ * Die NutriScoreResult
+ * soll die Ergebnisse anzeigen
+ * sowohl die Nahrungswerte als auch den Nutri Score
+ * und nochmaliges Scannen ermöglichen
+ */
 public class NutriScoreResult extends AppCompatActivity {
     private TextView scoreView;
     private Button scanButton;

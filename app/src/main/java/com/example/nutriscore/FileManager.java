@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+/**
+ * Kümmert sich um das Laden von Dateien
+ */
 public class FileManager {
     public static void main(String[] args) {
         System.out.println();

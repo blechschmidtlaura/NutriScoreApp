@@ -18,6 +18,10 @@ import com.example.nutriscore.calculation.Food;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Die Hauptaktivität
+ * In dieser Aktivität befinden sich die Eingabefelder
+ */
 public class MainActivity extends AppCompatActivity {
     public final int BUTTON_TO_SHOW_FADE_OUT_DURATION = 1000;
     public Button buttonToShow;

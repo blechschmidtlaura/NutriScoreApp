@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+/**
+ * Wenn der ButtonToShow gecklickt wird dann werden alle übergebenen Views sichtbar gemacht.
+ * Und darauf wird der Button selbst unsichtbar
+ */
 public class ButtonToShow {
     private MainActivity mainActivity;
     private List<View> viewsToMakeVisible;
@@ -28,7 +32,13 @@ public class ButtonToShow {
     }
 
 
-
+    /**
+     * onclick Funktion wenn der Button angecklickt wird
+     * alle Views werden sichtbar gemacht
+     * der Button selbst wird unsichtbar
+     * Alle Nahrungsfelder werden automatisch gefüllt.
+     * @param v Die View des Buttons ???
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClick(View v) {
         this.fadeOutView(this.mainActivity.buttonToShow, this.mainActivity.BUTTON_TO_SHOW_FADE_OUT_DURATION);
@@ -50,6 +60,11 @@ public class ButtonToShow {
         });
     }
 
+    /**
+     * Eine View wird langsam ausgeblendet
+     * @param v  die View
+     * @param duration die Dauer der ANimation
+     */
     public void fadeOutView(View v, int duration){
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(duration);
