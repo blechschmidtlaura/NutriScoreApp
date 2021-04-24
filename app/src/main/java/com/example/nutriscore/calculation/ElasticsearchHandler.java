@@ -14,10 +14,23 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
+/**
+ * Der ElasticsearchHandler
+ * Ruft die auf Torben Wetters Server gehostete API auf, welche für die Barcodes
+ * die in der Datenbank eingetragenen Nahrung zurückliefert
+ */
 public class ElasticsearchHandler {
 
+    // Die URL der API auf torbens Server gehostet
     private static final String searchUrl = "https://nutri.wetter.codes/products/_search";
 
+    /**
+     * Die Methode sendet eine Anfrage an die API
+     * @param jsonBody Das JSON Object der Anfrage
+     * @return gibt die Nahrung zurück
+     * @throws IOException
+     * @throws JSONException
+     */
     private static JSONObject sendPostRequest(String jsonBody) throws IOException, JSONException {
         final OkHttpClient client = new OkHttpClient();
         final RequestBody requestBody = RequestBody.create(jsonBody, MediaType.get("application/json; charset=utf-8"));
@@ -27,10 +40,24 @@ public class ElasticsearchHandler {
         return new JSONObject(responseBody.string());
     }
 
+    /**
+     * Testet ob das gelieferte Nahrungsmittel einen bestimmten Wert im JSON Object hat
+     * @param product Das Nahrungsmittel Ergebnis
+     * @param key Der geprüfte Schlüssel
+     * @return
+     * @throws JSONException
+     */
     private static boolean hasValue(JSONObject product, String key) throws JSONException {
         return !product.isNull(key) && !product.getString(key).equals("");
     }
 
+    /**
+     * Gibt für einen gesuchten Schlüssel einen Wert zurück
+     * @param product Das Nahrungsmittel
+     * @param keys die Schlüssel welche Abgefragt werden
+     * @return
+     * @throws JSONException
+     */
     private static String getValue(JSONObject product, String... keys) throws JSONException {
         for (String key : keys) {
             if (hasValue(product, key)) {
@@ -41,6 +68,14 @@ public class ElasticsearchHandler {
         // TODO ich habe das geändert weil das Produkt nicht die FrüchteGemüseNüsse hat
     }
 
+    /**
+     * Gibt für einen Barcode das Nahrungsmittel aus der Datenbank zurück
+     * @param ean Die ean des angefragten Barcodes
+     * @return Gibt ein Optionales Food Objekt zurück, da manchmal die gesuchte ean nicht in der Datenbank ist.
+     * @throws IOException
+     * @throws JSONException
+     * @throws IllegalArgumentException
+     */
     public static Optional<Food> getFoodByEAN(String ean) throws IOException, JSONException, IllegalArgumentException {
         ean = ean.replaceAll(" ", "");
 
