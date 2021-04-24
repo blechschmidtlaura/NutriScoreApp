@@ -86,12 +86,10 @@ public class BarCodeScanner extends AppCompatActivity {
         instance = this; // ermöglich den Zugriff aus anderen Klassen auf diese Instanz
         cameraView = (SurfaceView) findViewById(R.id.camera_view); // Bilder der Kamera
         barcodeInfo = (TextView) findViewById(R.id.barCode); // Erkannter Barcode
+        manuellBarcode = (Button) findViewById(R.id.eingabeBarcodeButton);
 
         startCamera(); // startet die Kamera!
-
-        // lieber vor der Kamera initialisieren
-        manuellBarcode = (Button) findViewById(R.id.eingabeBarcodeButton);
-        //this.manuellBarcode.onCl;
+        this.manuellBarcode.setOnClickListener(this:: changeToNutriScoreResult);
     }
 
 
@@ -202,7 +200,7 @@ public class BarCodeScanner extends AppCompatActivity {
         }
         Optional<Food> optionalFood = food.get(0);
         Food f;
-        // Wenn ein Nahrungsmittel entdeckt wurde wird zur NutriScoreResult Activity gewechselt
+        // Wenn ein Nahrungsmittel entdeckt wurde, wird zur NutriScoreResult Activity gewechselt
         if(optionalFood.isPresent()){
             f = optionalFood.get();
             Intent intent = new Intent(a, NutriScoreResult.class);
@@ -213,7 +211,7 @@ public class BarCodeScanner extends AppCompatActivity {
 
 
     }
-    // Lässt die Activity zur Main Activity wechseln wird nicht mehr verwendet
+    // Lässt die Activity zur Main Activity wechseln, wird nicht mehr verwendet
     protected static void changeToMain(Intent intent, Activity a, String ean){
         final List<Optional<Food>> food = new LinkedList<>();
         Thread t1 = new Thread(new Runnable() {
@@ -241,4 +239,8 @@ public class BarCodeScanner extends AppCompatActivity {
         }
     }
 
+    protected void changeToNutriScoreResult(View v){
+        Intent intent = new Intent(this, NutriScoreResult.class);
+        startActivity(intent);
+    }
 }

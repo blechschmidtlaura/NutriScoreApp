@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.nutriscore.R;
@@ -25,6 +26,7 @@ import com.example.nutriscore.calculation.NutriScore;
 public class NutriScoreResult extends AppCompatActivity {
     private TextView scoreView;
     private Button scanButton;
+    private EditText barcode;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +34,13 @@ public class NutriScoreResult extends AppCompatActivity {
         setContentView(R.layout.activity_nutri_score_result);
         this.scoreView = findViewById(R.id.nutriScoreResult);
         this.scanButton = findViewById(R.id.scanAgain);
-
+        this.barcode = findViewById(R.id.InputBarcode);
         this.scanButton.setOnClickListener(this::changeToBarcodeActivity);
         Intent intent = getIntent();
         int textColor;
+        if(barcode.getText() != null){
+            //hier den Score ausrechnen
+        }
         if (intent.hasExtra("food")){
             Food f = intent.getExtras().getParcelable("food");
             NutriScore nutriScore = new NutriScore(this.getApplicationContext());

@@ -20,5 +20,5 @@
     <string name="ballaststoffe">Ballaststoffe:</string>
     <string name="eiwei">Eiweiß:</string>
     <string name="barcodeTextView">Barcode</string>
-    <string name="eingabebarcodebutton">eingabeBarcodeButton</string>
+    <string name="eingabebarcodebutton">Barcode eingeben</string>
 </resources>
