@@ -58,6 +58,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *  BarCodeScanner - scant mit der Kamera den Barcode -> dann NutriScore
+ */
 public class BarCodeScanner extends AppCompatActivity {
 
 
