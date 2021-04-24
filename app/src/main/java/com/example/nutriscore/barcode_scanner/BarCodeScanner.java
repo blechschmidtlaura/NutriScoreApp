@@ -73,6 +73,10 @@ public class BarCodeScanner extends AppCompatActivity {
     Button manuellBarcode;
 
     /**
+     * OnCreate Funktion
+     * wird beim erstellen der activity aufgerufen
+     * es werden die Elemete der Activity inistialisiert
+     * und das Kamera Bild wird aufgezeichnet
      * @param savedInstanceState
      */
     @Override
@@ -91,6 +95,10 @@ public class BarCodeScanner extends AppCompatActivity {
     }
 
 
+    /**
+     * Die Methode startCamera, startet die Kamera
+     * Die gelieferten Bilder der Kamera werden nach Barcodes durchsucht
+     */
     protected void startCamera() {
         BarcodeDetector barcodeDetector =
                 new BarcodeDetector.Builder(this)
@@ -167,6 +175,11 @@ public class BarCodeScanner extends AppCompatActivity {
 
     }
 
+    /**
+     * Wenn ein Barcode erkannt wurde wird zur Result Activity gewechselt
+     * @param a die jetzige BarcodeActivity
+     * @param ean Die ean des entdeckten Barcodes
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected static void changeToResult(Activity a, String ean){
         final List<Optional<Food>> food = new LinkedList<>();
