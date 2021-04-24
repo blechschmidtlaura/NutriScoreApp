@@ -8,6 +8,10 @@ import com.example.nutriscore.FileManager;
 
 import java.io.IOException;
 
+/**
+ * NutriScore Klasse
+ * berechnet den NutriScore für ein Nahrungsmittel
+ */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class NutriScore {
     private  ScoreTabelle energieScore;
@@ -18,6 +22,10 @@ public class NutriScore {
     private  ScoreTabelle ballaststoffeScore;
     private  ScoreTabelle eiweissScore;
 
+    /**
+     * Die ScoreTabellen für berechnung des NutriScores werden aus dem Lokalen Speicher ausgelesen.
+     * @param c Context wird benötigt um auf den Lokalen Speicher des Handys zuzugreifen in welchem die Tabellen gespeichert sind
+     */
     public NutriScore(Context c) {
         try {
             energieScore = new ScoreTabelle(FileManager.getInputStreamFile("Energiewert.txt", c));
@@ -33,6 +41,12 @@ public class NutriScore {
 
     }
 
+    /**
+     * Berechnet den NutriScore
+     * private?
+     * @param food Das Nahrungsmittel
+     * @return Gibt einen Score als DOuble zurück
+     */
     public double calculateScore(Food food) {
         int energie = food.getEnergie();
         double zucker = food.getZucker();
@@ -63,6 +77,11 @@ public class NutriScore {
         return score;
     }
 
+    /**
+     * Berechnet aus dem Zahlen Wert den Buchstaben
+     * @param value Zahlen Wert
+     * @return Buchstaben Nutri Wert
+     */
     private char nutriValue(int value){
         if(value <=-1) {
             return 'A';
@@ -77,6 +96,11 @@ public class NutriScore {
         }
     }
 
+    /**
+     * Berechnet den NutriScore aus Fod Objekt
+     * @param food  Food Objekt
+     * @return gibt den Buchstaben Nutri Wert zurück
+     */
     public char getScore(Food food) {
         int score = (int) calculateScore(food);
         return nutriValue(score);
