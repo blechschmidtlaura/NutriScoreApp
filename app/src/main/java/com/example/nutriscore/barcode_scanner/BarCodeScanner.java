@@ -64,39 +64,44 @@ import java.util.Optional;
 public class BarCodeScanner extends AppCompatActivity {
 
 
-    TextView barcodeInfo;
-    SurfaceView cameraView;
-    CameraSource cameraSource;
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    private static BarCodeScanner instance;
+    TextView barcodeInfo; // barcodeInfo zeigt den von der Kamera erkannten Barcode an!
+    SurfaceView cameraView; // cameraView zeigt, das aktuell von der Kamera erfasste Bild
+    CameraSource cameraSource; // cameraSource -> ist die Kammera, welche die Bilder liefert
+    private static final int REQUEST_CAMERA_PERMISSION = 201; // REQUEST_CAMERA_PERMISSION ist der REQUEST Code für die Kamera Berechtigung
+    @SuppressLint("StaticFieldLeak")
+    private static BarCodeScanner instance; // diese KLasse ist ein Singleton, es gibt immer nur eine Instanz der Klasse
     Button manuellBarcode;
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_code_scanner);
-        instance = this;
-        cameraView = (SurfaceView) findViewById(R.id.camera_view);
-        barcodeInfo = (TextView) findViewById(R.id.barCode);
-        startCamera();
+        setContentView(R.layout.activity_bar_code_scanner); // Initializiert das Layout des Bildschirms
+        instance = this; // ermöglich den Zugriff aus anderen Klassen auf diese Instanz
+        cameraView = (SurfaceView) findViewById(R.id.camera_view); // Bilder der Kamera
+        barcodeInfo = (TextView) findViewById(R.id.barCode); // Erkannter Barcode
+
+        startCamera(); // startet die Kamera!
+
+        // lieber vor der Kamera initialisieren
         manuellBarcode = (Button) findViewById(R.id.eingabeBarcodeButton);
         //this.manuellBarcode.onCl;
     }
 
 
     protected void startCamera() {
-
-
         BarcodeDetector barcodeDetector =
                 new BarcodeDetector.Builder(this)
-                        .setBarcodeFormats(Barcode.EAN_13)//QR_CODE)
+                        .setBarcodeFormats(Barcode.EAN_13) // QR_CODE vom Typ EAN_13
                         .build();
 
         cameraSource = new CameraSource
                 .Builder(this, barcodeDetector)
-                .setAutoFocusEnabled(true)
-                .setFacing(CameraSource.CAMERA_FACING_BACK)
-                .setRequestedPreviewSize(3840, 2160)
+                .setAutoFocusEnabled(true) // Auto fokussieren der Kamera, verbessert die Erkennung
+                .setFacing(CameraSource.CAMERA_FACING_BACK) // Die Hintere Kamera, man könnte auch die Selfie Kamera verwenden
+                .setRequestedPreviewSize(3840, 2160) // Die Größe der Kamera Bilder 3840*2160 entspricht 4K
                 .build();
 
         SurfaceHolder holder = cameraView.getHolder();
@@ -105,9 +110,11 @@ public class BarCodeScanner extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
+                    // Abfrage nach der Erlaubnis der Kamera
                     if (ActivityCompat.checkSelfPermission(BarCodeScanner.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(cameraView.getHolder());
                     } else {
+                        // Kamera Berechtigungs Anfrage
                         ActivityCompat.requestPermissions(BarCodeScanner.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                         this.surfaceCreated(holder);
@@ -127,7 +134,7 @@ public class BarCodeScanner extends AppCompatActivity {
             }
         });
 
-
+        // definiert was passieren soll ven ein Barcode entdeckt wurde !
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -163,6 +170,7 @@ public class BarCodeScanner extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected static void changeToResult(Activity a, String ean){
         final List<Optional<Food>> food = new LinkedList<>();
+        // Die ElasticSearch Request wird auf einem anderen Thread ausgeführt
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() throws IllegalArgumentException{
@@ -181,16 +189,18 @@ public class BarCodeScanner extends AppCompatActivity {
         }
         Optional<Food> optionalFood = food.get(0);
         Food f;
+        // Wenn ein Nahrungsmittel entdeckt wurde wird zur NutriScoreResult Activity gewechselt
         if(optionalFood.isPresent()){
             f = optionalFood.get();
             Intent intent = new Intent(a, NutriScoreResult.class);
+            // die Nahrungsmittelinstanz food wird an die neue Activity übertragen!
             intent.putExtra("food", f);
             a.startActivity(intent);
         }
 
 
     }
-
+    // Lässt die Activity zur Main Activity wechseln wird nicht mehr verwendet
     protected static void changeToMain(Intent intent, Activity a, String ean){
         final List<Optional<Food>> food = new LinkedList<>();
         Thread t1 = new Thread(new Runnable() {
