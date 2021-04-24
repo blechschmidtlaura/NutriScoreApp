@@ -66,6 +66,7 @@ public class BarCodeScanner extends AppCompatActivity {
     CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     private static BarCodeScanner instance;
+    Button manuellBarcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,8 @@ public class BarCodeScanner extends AppCompatActivity {
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
         barcodeInfo = (TextView) findViewById(R.id.barCode);
         startCamera();
+        manuellBarcode = (Button) findViewById(R.id.eingabeBarcodeButton);
+        //this.manuellBarcode.onCl;
     }
 
 
