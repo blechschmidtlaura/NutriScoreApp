@@ -11,11 +11,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nutriscore.R;
 import com.example.nutriscore.barcode_scanner.BarCodeScanner;
+import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Die NutriScoreResult
@@ -27,6 +36,7 @@ public class NutriScoreResult extends AppCompatActivity {
     private TextView scoreView;
     private Button scanButton;
     private EditText barcode;
+    private Button resultBarcode;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +48,6 @@ public class NutriScoreResult extends AppCompatActivity {
         this.scanButton.setOnClickListener(this::changeToBarcodeActivity);
         Intent intent = getIntent();
         int textColor;
-        if(barcode.getText() != null){
-            //hier den Score ausrechnen
-        }
         if (intent.hasExtra("food")){
             Food f = intent.getExtras().getParcelable("food");
             NutriScore nutriScore = new NutriScore(this.getApplicationContext());
@@ -68,8 +75,46 @@ public class NutriScoreResult extends AppCompatActivity {
             this.scoreView.setTextColor(textColor);
             this.scoreView.setText(String.valueOf(score));
         }
-
+        this.resultBarcode = findViewById(R.id.buttonErgebnis);
+        this.resultBarcode.setOnClickListener(this::getResult);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected int getResult(View v){
+        int result = -1;
+        if(barcode.getText() != null){
+            String ean = barcode.getText().toString();
+            final List<Optional<Food>> food = new LinkedList<>();
+            // Die ElasticSearch Request wird auf einem anderen Thread ausgeführt
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() throws IllegalArgumentException{
+                    try {
+                        food.add(ElasticsearchHandler.getFoodByEAN(ean));
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            t1.start();
+            try {
+                t1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Optional<Food> optionalFood = food.get(0);
+            Food f;
+            if(optionalFood.isPresent()){
+                f = optionalFood.get();
+                NutriScore nutriScore = new NutriScore(this.getApplicationContext());
+                result = nutriScore.getScore(f);
+            } else{
+                Toast.makeText(this, "Kein Nahrungsmittel gefunden!", Toast.LENGTH_LONG).show();
+            }
+        }
+        return result;
+    }
+
     protected void changeToBarcodeActivity(View v){
         Intent intent = new Intent(this, BarCodeScanner.class);
         startActivity(intent);

@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.buttonScanner.setOnClickListener(this::changeToBarcodeActivity);
         System.out.println("On Create");
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
