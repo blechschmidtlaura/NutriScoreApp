@@ -21,4 +21,9 @@
     <string name="eiwei">Eiweiß:</string>
     <string name="barcodeTextView">Barcode</string>
     <string name="eingabebarcodebutton">Barcode eingeben</string>
+    <string name="ergebnis">Ergebnis</string>
+    <string name="nutri_score">Nutri Score</string>
+    <string name="scannen">Scannen</string>
+    <string name="inhaltsstoffe">Inhaltsstoffe</string>
+    <string name="ergebnis2">Ergebnis</string>
 </resources>
