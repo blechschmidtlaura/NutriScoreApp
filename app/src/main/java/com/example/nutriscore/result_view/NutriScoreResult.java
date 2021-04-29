@@ -46,42 +46,21 @@ public class NutriScoreResult extends AppCompatActivity {
         this.scanButton = findViewById(R.id.scanAgain);
         this.barcode = findViewById(R.id.InputBarcode);
         this.scanButton.setOnClickListener(this::changeToBarcodeActivity);
+
         Intent intent = getIntent();
-        int textColor;
         if (intent.hasExtra("food")){
             Food f = intent.getExtras().getParcelable("food");
             NutriScore nutriScore = new NutriScore(this.getApplicationContext());
             char score = nutriScore.getScore(f);
-
-            switch (score){
-                case 'A':
-                    textColor = Color.GREEN;
-                    break;
-                case 'B':
-                    textColor = Color.YELLOW;
-                    break;
-                case 'C':
-                    textColor = Color.rgb(100, 100, 0);
-                    break;
-                case 'D':
-                    textColor = Color.RED;
-                    break;
-                case 'E':
-                    textColor = Color.rgb(60, 0, 0);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + score);
-            }
-            this.scoreView.setTextColor(textColor);
-            this.scoreView.setText(String.valueOf(score));
+            showResult(score);
         }
         this.resultBarcode = findViewById(R.id.buttonErgebnis);
         this.resultBarcode.setOnClickListener(this::getResult);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected int getResult(View v){
-        int result = -1;
+    protected void getResult(View v){
+        char result;
         if(barcode.getText() != null){
             String ean = barcode.getText().toString();
             final List<Optional<Food>> food = new LinkedList<>();
@@ -108,12 +87,38 @@ public class NutriScoreResult extends AppCompatActivity {
                 f = optionalFood.get();
                 NutriScore nutriScore = new NutriScore(this.getApplicationContext());
                 result = nutriScore.getScore(f);
+                showResult(result);
             } else{
                 Toast.makeText(this, "Kein Nahrungsmittel gefunden!", Toast.LENGTH_LONG).show();
             }
         }
-        return result;
     }
+
+    protected void showResult(char score){
+        int textColor;
+        switch (score){
+            case 'A':
+                textColor = Color.GREEN;
+                break;
+            case 'B':
+                textColor = Color.YELLOW;
+                break;
+            case 'C':
+                textColor = Color.rgb(100, 100, 0);
+                break;
+            case 'D':
+                textColor = Color.RED;
+                break;
+            case 'E':
+                textColor = Color.rgb(60, 0, 0);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + score);
+        }
+        this.scoreView.setTextColor(textColor);
+        this.scoreView.setText(String.valueOf(score));
+    }
+
 
     protected void changeToBarcodeActivity(View v){
         Intent intent = new Intent(this, BarCodeScanner.class);
