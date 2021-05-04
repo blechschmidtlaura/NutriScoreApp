@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriScore">
-        <activity android:name=".result_view.NutriScoreResult"></activity>
+        <activity android:name=".result_view.NutriScoreResult"
+            android:label="Ergebnis Nutri Score">
+        </activity>
         <activity android:name=".barcode_scanner.BarCodeScanner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main_activity.MainActivity"></activity>
-        <activity android:name=".information.InformationNutriScore"></activity>
+        <activity android:name=".main_activity.MainActivity" ></activity>
+        <activity android:name=".information.InformationNutriScore"
+            android:label="Informationen Nutri Score">
+        </activity>
     </application>
 
 </manifest>
