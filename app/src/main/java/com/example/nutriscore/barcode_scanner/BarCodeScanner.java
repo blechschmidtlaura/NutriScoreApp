@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
+import com.example.nutriscore.information.InformationNutriScore;
 import com.example.nutriscore.result_view.NutriScoreResult;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -43,6 +44,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nutriscore.R;
 import com.example.nutriscore.main_activity.MainActivity;
@@ -63,7 +65,7 @@ import java.util.Optional;
  */
 public class BarCodeScanner extends AppCompatActivity {
 
-
+    Button informationButton; //bei Klicken gelangt man zu einer Informationsseite
     TextView barcodeInfo; // barcodeInfo zeigt den von der Kamera erkannten Barcode an!
     SurfaceView cameraView; // cameraView zeigt, das aktuell von der Kamera erfasste Bild
     CameraSource cameraSource; // cameraSource -> ist die Kammera, welche die Bilder liefert
@@ -90,6 +92,9 @@ public class BarCodeScanner extends AppCompatActivity {
 
         startCamera(); // startet die Kamera!
         this.manuellBarcode.setOnClickListener(this:: changeToNutriScoreResult);
+
+        informationButton = (Button) findViewById(R.id.information_button);
+        this.informationButton.setOnClickListener(this::changeInformationNutriScore);
     }
 
 
@@ -241,6 +246,11 @@ public class BarCodeScanner extends AppCompatActivity {
 
     protected void changeToNutriScoreResult(View v){
         Intent intent = new Intent(this, NutriScoreResult.class);
+        startActivity(intent);
+    }
+
+    protected void changeInformationNutriScore(View v){
+        Intent intent = new Intent(this, InformationNutriScore.class);
         startActivity(intent);
     }
 }
