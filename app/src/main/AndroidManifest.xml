@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".main_activity.MainActivity"></activity>
+        <activity android:name=".information.InformationNutriScore"></activity>
     </application>
 
 </manifest>

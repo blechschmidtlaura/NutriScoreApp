@@ -24,6 +24,7 @@ public class InformationNutriScore extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.information_nutri_score);
+        informationText = (TextView) findViewById(R.id.informationText);
         getInformationText();
         //TextView anzeigen, erstellen und id finden und zuschreiben
     }
