@@ -39,7 +39,8 @@ public class NutriScoreResult extends AppCompatActivity {
     private Button scanButton;
     private EditText barcode;
     private Button resultBarcode;
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    private FoodDisplay foodDisplay;
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +49,18 @@ public class NutriScoreResult extends AppCompatActivity {
         this.scanButton = findViewById(R.id.scanAgain);
         this.barcode = findViewById(R.id.InputBarcode);
         this.scanButton.setOnClickListener(this::changeToBarcodeActivity);
+        foodDisplay = new FoodDisplay(this);
 
         Intent intent = getIntent();
         if (intent.hasExtra("food")){
             Food f = intent.getExtras().getParcelable("food");
+            foodDisplay.autoFillFood(f);
             NutriScore nutriScore = new NutriScore(this.getApplicationContext());
             char score = nutriScore.getScore(f);
             showResult(score);
         }
         this.resultBarcode = findViewById(R.id.buttonErgebnis);
         this.resultBarcode.setOnClickListener(this::getResult);
-        //autofill fields);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -88,6 +90,7 @@ public class NutriScoreResult extends AppCompatActivity {
             Food f;
             if(optionalFood.isPresent()){
                 f = optionalFood.get();
+                foodDisplay.autoFillFood(f);
                 NutriScore nutriScore = new NutriScore(this.getApplicationContext());
                 result = nutriScore.getScore(f);
                 showResult(result);
@@ -95,7 +98,6 @@ public class NutriScoreResult extends AppCompatActivity {
                 Toast.makeText(this, "Kein Nahrungsmittel gefunden!", Toast.LENGTH_LONG).show();
             }
         }
-        //Todo: autofill in fields
     }
 
     protected void showResult(char score){
