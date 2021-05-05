@@ -1,182 +1,45 @@
 package com.example.nutriscore.calculation;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.nutriscore.FileManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Die Food Klasse speichert für ein Nahrungsmittel ale wichtigen Inhaltstoffe
+ * Die Food Klasse speichert für ein Nahrungsmittel alle wichtigen Inhaltstoffe
  * Es ist Parcelable damit es von einer Activity an die andere weitergegeben werden kann
  */
-public class Food  implements Parcelable {
-    private int energie;
-    private double zucker;
-    private double gesFettsaeuren;
-    private double natrium;
-    private int fruechteGemuese;
-    private double ballaststoffe;
-    private double eiweiss;
+public class Food  extends Product {
 
-    /**
-     *
-     * @param energie die Kalorien
-     * @param zucker Zucker des Produkts
-     * @param gesFettsaeuren Gesättigte Fettsäuren des Produkts
-     * @param natrium Natrium also Salz des Produktes
-     * @param fruechteGemuese Menge an fruechtengemuesen und nüssen
-     * @param ballaststoffe Anteil an Balaststoffen
-     * @param eiweiss Eiweiß Anteil
-     */
-    public Food(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
-        this.initializeValues(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
+    public Food(Context c, int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
+        super(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
+        loadFiles(c);
     }
 
     /**
-     * Parcelable Konstruktor damit das Food Object von einer Activity an die nächste weitergegebene werden kann
-     * @param in  Das übergebene Parcel Object
+     * Die ScoreTabellen für berechnung des NutriScores werden aus dem Lokalen Speicher ausgelesen.
+     * @param c Context wird benötigt um auf den Lokalen Speicher des Handys zuzugreifen in welchem die Tabellen gespeichert sind
      */
-    private Food(Parcel in) {
-        List<Double> myList = new ArrayList<>();
-        in.readList(myList,List.class.getClassLoader());
-        initializeValues(myList);
-    }
 
-    /**
-     * An diesen Konstruktor kann eine Liste der Inhaltsstoffe übergeben werden,
-     * diese wird dann einfach den entsprechenden Attributen zugeordnet.
-     * 1. Element Energie
-     * 2. Zucker ...
-     * @param doubles
-     */
-    public Food(List<Double> doubles){
-        initializeValues(doubles);
-    }
-
-    public Food(double zucker) {
-        this(0, zucker, 0, 0, 0, 0, 0);
-    }
-
-    /**
-     * Initialisiert die Nahrungswerte
-     * @param energie Kalorien
-     * @param zucker Zucker
-     * @param gesFettsaeuren Fettsäuren
-     * @param natrium Salz
-     * @param fruechteGemuese Menge fruechte oder gemuese oder nüsse
-     * @param ballaststoffe Ballaststoffe
-     * @param eiweiss Eiweiß
-     */
-    private void initializeValues(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss){
-        this.energie = energie;
-        this.zucker = zucker;
-        this.gesFettsaeuren = gesFettsaeuren;
-        this.natrium = natrium;
-        this.fruechteGemuese = fruechteGemuese;
-        this.ballaststoffe = ballaststoffe;
-        this.eiweiss = eiweiss;
-    }
-
-    /**
-     * Initialisiert die Werte des Foods Objekt mit einer Liste
-     * @param doubles  Liste der Nahrungswerte
-     */
-    private void initializeValues(List<Double> doubles){
-        initializeValues(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
-    }
-
-    /**
-     * Getter des Energie Attributs
-     * @return  Energie
-     */
-    public int getEnergie() {
-        return energie;
-    }
-
-    /**
-     * Getter des Zucker Attributs
-     * @return Zucker
-     */
-    public double getZucker() {
-        return zucker;
-    }
-
-    /**
-     * Getter Fettsäuren
-     * @return Fettsäuren
-     */
-    public double getGesFettsaeuren() {
-        return gesFettsaeuren;
-    }
-
-    /**
-     * Getter Salz
-     * @return  Salz
-     */
-    public double getNatrium() {
-        return natrium;
-    }
-
-    /**
-     * Getter Früchte und Gemüse
-     * @return Früchte und Gemüse
-     */
-    public int getFruechteGemuese() {
-        return fruechteGemuese;
-    }
-
-    /**
-     * Getter Ballaststoffe
-     * @return  Balaststoffe
-     */
-    public double getBallaststoffe() {
-        return ballaststoffe;
-    }
-
-
-    /**
-     * Getter Eiweiß
-     * @return  Eiweiß
-     */
-    public double getEiweiss() {
-        return eiweiss;
-    }
-
-
-    /**
-     * Überschreibt Parceable Method
-     * @return  0
-     */
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /**
-     * Überschreibt Parceable Methode
-     * @param out Parcel Objekt
-     * @param flags 0
-     */
-    @Override
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeList(List.of((double)energie, (double)zucker, (double)gesFettsaeuren, (double)natrium, (double)fruechteGemuese, (double)ballaststoffe, (double)eiweiss));
-    }
-
-    public static final Parcelable.Creator<Food> CREATOR
-            = new Parcelable.Creator<Food>() {
-        public Food createFromParcel(Parcel in) {
-            return new Food(in);
+    private void loadFiles(Context c){
+        try {
+            this.setEnergieScore(new ScoreTabelle(FileManager.getInputStreamFile("Energiewert.txt", c)));
+            this.setZuckerScore(new ScoreTabelle(FileManager.getInputStreamFile("Zuckerwert.txt", c)));
+            this.setGesFettsaeurenScore(new ScoreTabelle(FileManager.getInputStreamFile("GesFettsaeuren.txt", c)));
+            this.setNatriumScore(new ScoreTabelle(FileManager.getInputStreamFile("Natrium.txt", c)));
+            this.setFruechteGemueseScore(new ScoreTabelle(FileManager.getInputStreamFile("FruechteGemuese.txt", c)));
+            this.setBallaststoffeScore(new ScoreTabelle(FileManager.getInputStreamFile("Ballaststoffe.txt", c)));
+            this.setEiweissScore(new ScoreTabelle(FileManager.getInputStreamFile("Eiweiss.txt", c)));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        public Food[] newArray(int size) {
-            return new Food[size];
-        }
-    };
-
-
+    }
 }

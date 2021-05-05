@@ -14,65 +14,34 @@ import java.io.IOException;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class NutriScore {
-    private  ScoreTabelle energieScore;
-    private  ScoreTabelle zuckerScore;
-    private  ScoreTabelle gesFettsaeurenScore;
-    private  ScoreTabelle natriumScore;
-    private  ScoreTabelle fruechteGemueseScore;
-    private  ScoreTabelle ballaststoffeScore;
-    private  ScoreTabelle eiweissScore;
-
-    /**
-     * Die ScoreTabellen für berechnung des NutriScores werden aus dem Lokalen Speicher ausgelesen.
-     * @param c Context wird benötigt um auf den Lokalen Speicher des Handys zuzugreifen in welchem die Tabellen gespeichert sind
-     */
-    public NutriScore(Context c) {
-        try {
-            energieScore = new ScoreTabelle(FileManager.getInputStreamFile("Energiewert.txt", c));
-            zuckerScore = new ScoreTabelle(FileManager.getInputStreamFile("Zuckerwert.txt", c));
-            gesFettsaeurenScore = new ScoreTabelle(FileManager.getInputStreamFile("GesFettsaeuren.txt", c));
-            natriumScore = new ScoreTabelle(FileManager.getInputStreamFile("Natrium.txt", c));
-            fruechteGemueseScore = new ScoreTabelle(FileManager.getInputStreamFile("FruechteGemuese.txt", c));
-            ballaststoffeScore = new ScoreTabelle(FileManager.getInputStreamFile("Ballaststoffe.txt", c));
-            eiweissScore = new ScoreTabelle(FileManager.getInputStreamFile("Eiweiss.txt", c));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     /**
      * Berechnet den NutriScore
      * private?
-     * @param food Das Nahrungsmittel
+     * @param product Das Nahrungsmittel
      * @return Gibt einen Score als DOuble zurück
      */
-    public double calculateScore(Food food) {
-        int energie = food.getEnergie();
-        double zucker = food.getZucker();
-        double gesFettsaeuren = food.getGesFettsaeuren();
-        double natrium = food.getNatrium();
-        int fruechteGemuese = food.getFruechteGemuese();
-        double ballaststoffe = food.getBallaststoffe();
-        double eiweiss = food.getEiweiss();
+    public static double calculateScore(Product product) {
+        int energie = product.getEnergie();
+        double zucker = product.getZucker();
+        double gesFettsaeuren = product.getGesFettsaeuren();
+        double natrium = product.getNatrium();
+        int fruechteGemuese = product.getFruechteGemuese();
+        double ballaststoffe = product.getBallaststoffe();
+        double eiweiss = product.getEiweiss();
 
         double score = 0;
         double punkte = energie + zucker + gesFettsaeuren + natrium;
+        score = product.getEnergieScore().get(energie) +
+                product.getZuckerScore().get(zucker) +
+                product.getGesFettsaeurenScore().get(gesFettsaeuren) +
+                product.getNatriumScore().get(natrium) +
+                product.getFruechteGemueseScore().get(fruechteGemuese) +
+                product.getBallaststoffeScore().get(ballaststoffe);
         if (punkte >= 11 && (fruechteGemuese >= -4 && fruechteGemuese <= -1)) {
-            score = energieScore.get(energie) +
-                    zuckerScore.get(zucker) +
-                    gesFettsaeurenScore.get(gesFettsaeuren) +
-                    natriumScore.get(natrium) +
-                    fruechteGemueseScore.get(fruechteGemuese) +
-                    ballaststoffeScore.get(ballaststoffe);
+            score = score;
         }else{
-            score = energieScore.get(energie) +
-                    zuckerScore.get(zucker) +
-                    gesFettsaeurenScore.get(gesFettsaeuren) +
-                    natriumScore.get(natrium) +
-                    fruechteGemueseScore.get(fruechteGemuese) +
-                    ballaststoffeScore.get(ballaststoffe) +
-                    eiweissScore.get(eiweiss);
+            score = score + product.getEiweissScore().get(eiweiss);
         }
         return score;
     }
@@ -82,7 +51,7 @@ public class NutriScore {
      * @param value Zahlen Wert
      * @return Buchstaben Nutri Wert
      */
-    private char nutriValue(int value){
+    private static char nutriValue(int value){
         if(value <=-1) {
             return 'A';
         }else if(value <=2){
@@ -98,11 +67,11 @@ public class NutriScore {
 
     /**
      * Berechnet den NutriScore aus Fod Objekt
-     * @param food  Food Objekt
+     * @param product  Food Objekt
      * @return gibt den Buchstaben Nutri Wert zurück
      */
-    public char getScore(Food food) {
-        int score = (int) calculateScore(food);
+    public static char getScore(Product product) {
+        int score = (int) calculateScore(product);
         return nutriValue(score);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.nutriscore.calculation;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +78,7 @@ public class ElasticsearchHandler {
      * @throws JSONException
      * @throws IllegalArgumentException
      */
-    public static Optional<Food> getFoodByEAN(String ean) throws IOException, JSONException, IllegalArgumentException {
+    public static Optional<Product> getFoodByEAN(String ean, Context c) throws IOException, JSONException, IllegalArgumentException {
         ean = ean.replaceAll(" ", "");
 
         final JSONObject response = sendPostRequest("{ \"query\": { \"term\": { \"code\": \"" + ean + "\" } } }");
@@ -86,7 +88,7 @@ public class ElasticsearchHandler {
         }
 
         final JSONObject product = hits.getJSONObject(0).getJSONObject("_source");
-
+        System.out.println(product.toString());
         final int energy_kJ = Integer.parseInt(getValue(product, "energy-kj_100g", "energy_100g"));
         final double sugar_g = Double.parseDouble(product.getString("sugars_100g"));
         final double saturatedFat_g = Double.parseDouble(product.getString("saturated-fat_100g"));
@@ -95,7 +97,12 @@ public class ElasticsearchHandler {
         final double dietaryFiber_g = hasValue(product, "fiber_100g") ? Double.parseDouble(product.getString("fiber_100g")) : 0.0;
         final double protein_g = Double.parseDouble(product.getString("proteins_100g"));
 
-        return Optional.of(new Food(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+        final String category = getValue(product, "quantity".split()); //Todo: regex
+        if(category.equals("ml")) {
+            return Optional.of(new Drink(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+        } else{
+            return Optional.of(new Food(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+        }
     }
 }
 

@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.nutriscore.R;
 import com.example.nutriscore.calculation.Food;
+import com.example.nutriscore.calculation.Product;
 import com.example.nutriscore.main_activity.MainActivity;
 
 import java.util.LinkedList;
@@ -42,14 +43,14 @@ public class FoodDisplay{
 
     }
 
-    public void autoFillFood(Food food){
-        ((EditText) viewsToMakeVisible.get(0)).setText(String.valueOf(food.getZucker()));
-        ((EditText) viewsToMakeVisible.get(1)).setText(String.valueOf(food.getEnergie()));
-        ((EditText) viewsToMakeVisible.get(2)).setText(String.valueOf(food.getBallaststoffe()));
-        ((EditText) viewsToMakeVisible.get(3)).setText(String.valueOf(food.getFruechteGemuese()));
-        ((EditText) viewsToMakeVisible.get(4)).setText(String.valueOf(food.getGesFettsaeuren()));
-        ((EditText) viewsToMakeVisible.get(5)).setText(String.valueOf(food.getNatrium()));
-        ((EditText) viewsToMakeVisible.get(6)).setText(String.valueOf(food.getEiweiss()));
+    public void autoFillFood(Product product){
+        ((EditText) viewsToMakeVisible.get(0)).setText(String.valueOf(product.getZucker()));
+        ((EditText) viewsToMakeVisible.get(1)).setText(String.valueOf(product.getEnergie()));
+        ((EditText) viewsToMakeVisible.get(2)).setText(String.valueOf(product.getBallaststoffe()));
+        ((EditText) viewsToMakeVisible.get(3)).setText(String.valueOf(product.getFruechteGemuese()));
+        ((EditText) viewsToMakeVisible.get(4)).setText(String.valueOf(product.getGesFettsaeuren()));
+        ((EditText) viewsToMakeVisible.get(5)).setText(String.valueOf(product.getNatrium()));
+        ((EditText) viewsToMakeVisible.get(6)).setText(String.valueOf(product.getEiweiss()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)

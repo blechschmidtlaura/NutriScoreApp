@@ -3,6 +3,7 @@ package com.example.nutriscore.result_view;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,6 +19,7 @@ import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
+import com.example.nutriscore.calculation.Product;
 import com.example.nutriscore.main_activity.ButtonToShow;
 import com.example.nutriscore.main_activity.MainActivity;
 
@@ -53,10 +55,9 @@ public class NutriScoreResult extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent.hasExtra("food")){
-            Food f = intent.getExtras().getParcelable("food");
-            foodDisplay.autoFillFood(f);
-            NutriScore nutriScore = new NutriScore(this.getApplicationContext());
-            char score = nutriScore.getScore(f);
+            Product product = intent.getExtras().getParcelable("food");
+            foodDisplay.autoFillFood(product);
+            char score = NutriScore.getScore(product);
             showResult(score);
         }
         this.resultBarcode = findViewById(R.id.buttonErgebnis);
@@ -68,13 +69,14 @@ public class NutriScoreResult extends AppCompatActivity {
         char result;
         if(barcode.getText() != null){
             String ean = barcode.getText().toString();
-            final List<Optional<Food>> food = new LinkedList<>();
+            final List<Optional<Product>> products = new LinkedList<>();
+            Context c = this.getApplicationContext();
             // Die ElasticSearch Request wird auf einem anderen Thread ausgeführt
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() throws IllegalArgumentException{
                     try {
-                        food.add(ElasticsearchHandler.getFoodByEAN(ean));
+                        products.add(ElasticsearchHandler.getFoodByEAN(ean, c));
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
@@ -86,13 +88,12 @@ public class NutriScoreResult extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Optional<Food> optionalFood = food.get(0);
-            Food f;
+            Optional<Product> optionalFood = products.get(0);
+            Product product1;
             if(optionalFood.isPresent()){
-                f = optionalFood.get();
-                foodDisplay.autoFillFood(f);
-                NutriScore nutriScore = new NutriScore(this.getApplicationContext());
-                result = nutriScore.getScore(f);
+                product1 = optionalFood.get();
+                foodDisplay.autoFillFood(product1);
+                result = NutriScore.getScore(product1);
                 showResult(result);
             } else{
                 Toast.makeText(this, "Kein Nahrungsmittel gefunden!", Toast.LENGTH_LONG).show();
