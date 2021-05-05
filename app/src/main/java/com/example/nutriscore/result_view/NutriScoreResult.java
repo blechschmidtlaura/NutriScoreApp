@@ -20,9 +20,6 @@ import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
 import com.example.nutriscore.calculation.Product;
-import com.example.nutriscore.main_activity.ButtonToShow;
-import com.example.nutriscore.main_activity.MainActivity;
-
 import org.json.JSONException;
 
 import java.io.IOException;

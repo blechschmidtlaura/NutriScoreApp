@@ -7,8 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.cert.PKIXRevocationChecker;
 import java.util.Arrays;
 import java.util.Optional;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -78,7 +82,7 @@ public class ElasticsearchHandler {
      * @throws JSONException
      * @throws IllegalArgumentException
      */
-    public static Optional<Product> getFoodByEAN(String ean, Context c) throws IOException, JSONException, IllegalArgumentException {
+    public static Optional<Product> getFoodByEAN(String ean, Context c) throws IOException, JSONException {
         ean = ean.replaceAll(" ", "");
 
         final JSONObject response = sendPostRequest("{ \"query\": { \"term\": { \"code\": \"" + ean + "\" } } }");
@@ -97,11 +101,21 @@ public class ElasticsearchHandler {
         final double dietaryFiber_g = hasValue(product, "fiber_100g") ? Double.parseDouble(product.getString("fiber_100g")) : 0.0;
         final double protein_g = Double.parseDouble(product.getString("proteins_100g"));
 
-        final String category = getValue(product, "quantity".split()); //Todo: regex
-        if(category.equals("ml")) {
-            return Optional.of(new Drink(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
-        } else{
-            return Optional.of(new Food(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+        final String quantity = getValue(product, "quantity");
+        String s = new String("([\\d]*)([\\w]*)");
+        Pattern pattern = Pattern.compile(s);
+        Matcher matcher = pattern.matcher(quantity);
+        boolean matchFound = matcher.matches();
+        if (matchFound) {
+            final String category = matcher.group(2);
+            System.out.println(category);
+            if (category.equals("ml") || category.equals("l")) {
+                return Optional.of(new Drink(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+            } else {
+                return Optional.of(new Food(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+            }
+        }else{
+            return Optional.empty();
         }
     }
 }

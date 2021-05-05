@@ -244,6 +244,8 @@ public class Product implements Parcelable {
         return 0;
     }
 
+
+    // TODO Parcel does not pass the tables !
     /**
      * Überschreibt Parceable Methode
      * @param out Parcel Objekt

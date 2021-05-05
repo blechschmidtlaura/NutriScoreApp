@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi;
 import com.example.nutriscore.R;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.Product;
-import com.example.nutriscore.main_activity.MainActivity;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -3,6 +3,7 @@ package com.example.nutriscore.barcode_scanner;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
+import com.example.nutriscore.calculation.Product;
 import com.example.nutriscore.information.InformationNutriScore;
 import com.example.nutriscore.result_view.NutriScoreResult;
 import com.google.android.gms.vision.CameraSource;
@@ -47,7 +49,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nutriscore.R;
-import com.example.nutriscore.main_activity.MainActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -166,13 +167,9 @@ public class BarCodeScanner extends AppCompatActivity {
 
                         }
                     });
-                    Intent intent = new Intent(BarCodeScanner.instance, MainActivity.class);
                     String ean = barcodes.valueAt(0).rawValue;
                     BarCodeScanner.changeToResult(instance, ean);
-
                 }
-
-
             }
         });
 
@@ -185,13 +182,14 @@ public class BarCodeScanner extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected static void changeToResult(Activity a, String ean){
-        final List<Optional<Food>> food = new LinkedList<>();
+        final List<Optional<Product>> food = new LinkedList<>();
+        final Context c = a.getApplicationContext();
         // Die ElasticSearch Request wird auf einem anderen Thread ausgeführt
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() throws IllegalArgumentException{
                 try {
-                    food.add(ElasticsearchHandler.getFoodByEAN(ean));
+                    food.add(ElasticsearchHandler.getFoodByEAN(ean, c));
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
@@ -203,8 +201,8 @@ public class BarCodeScanner extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Optional<Food> optionalFood = food.get(0);
-        Food f;
+        Optional<Product> optionalFood = food.get(0);
+        Product f;
         // Wenn ein Nahrungsmittel entdeckt wurde, wird zur NutriScoreResult Activity gewechselt
         if(optionalFood.isPresent()){
             f = optionalFood.get();
@@ -215,33 +213,6 @@ public class BarCodeScanner extends AppCompatActivity {
         }
 
 
-    }
-    // Lässt die Activity zur Main Activity wechseln, wird nicht mehr verwendet
-    protected static void changeToMain(Intent intent, Activity a, String ean){
-        final List<Optional<Food>> food = new LinkedList<>();
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() throws IllegalArgumentException{
-                try {
-                    food.add(ElasticsearchHandler.getFoodByEAN(ean));
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t1.start();
-        try {
-            t1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Optional<Food> optionalFood = food.get(0);
-        if (optionalFood.isPresent()) {
-            intent.putExtra("food", (Parcelable) optionalFood.get());
-            a.startActivity(intent);
-        }else{
-            Toast.makeText(a.getApplicationContext(), "Fehler!", Toast.LENGTH_SHORT).show();
-        }
     }
 
     protected void changeToNutriScoreResult(View v){
