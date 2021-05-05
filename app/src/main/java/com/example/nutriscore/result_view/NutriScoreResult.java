@@ -18,6 +18,8 @@ import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 import com.example.nutriscore.calculation.ElasticsearchHandler;
 import com.example.nutriscore.calculation.Food;
 import com.example.nutriscore.calculation.NutriScore;
+import com.example.nutriscore.main_activity.ButtonToShow;
+import com.example.nutriscore.main_activity.MainActivity;
 
 import org.json.JSONException;
 
@@ -56,6 +58,7 @@ public class NutriScoreResult extends AppCompatActivity {
         }
         this.resultBarcode = findViewById(R.id.buttonErgebnis);
         this.resultBarcode.setOnClickListener(this::getResult);
+        //autofill fields);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -92,6 +95,7 @@ public class NutriScoreResult extends AppCompatActivity {
                 Toast.makeText(this, "Kein Nahrungsmittel gefunden!", Toast.LENGTH_LONG).show();
             }
         }
+        //Todo: autofill in fields
     }
 
     protected void showResult(char score){

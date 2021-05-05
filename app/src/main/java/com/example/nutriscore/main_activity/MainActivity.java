@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         this.scannerChange();
     }
 
+    // TODO aus einer anderen Klasse ausrufen   DRY(Dont Repeat yourself)
     public void autoFillFood(Food food){
         ((EditText) viewsToMakeVisible.get(0)).setText(String.valueOf(food.getZucker()));
         ((EditText) viewsToMakeVisible.get(1)).setText(String.valueOf(food.getEnergie()));
