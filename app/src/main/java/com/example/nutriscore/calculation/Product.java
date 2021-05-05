@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product implements Parcelable {
+public abstract class Product implements Parcelable {
 
     private int energie;
     private double zucker;
@@ -129,6 +129,7 @@ public class Product implements Parcelable {
      * Parcelable Konstruktor damit das Food Object von einer Activity an die nächste weitergegebene werden kann
      * @param in  Das übergebene Parcel Object
      */
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private Product(Parcel in) {
         List<Double> myList = new ArrayList<>();
         in.readList(myList,List.class.getClassLoader());
@@ -177,6 +178,26 @@ public class Product implements Parcelable {
     private void initializeValues(List<Double> doubles){
         initializeValues(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
     }
+
+    private void initializeValuesScores(ScoreTabelle energie, ScoreTabelle zucker, ScoreTabelle gesFettsaeuren, ScoreTabelle natrium, ScoreTabelle fruechteGemuese, ScoreTabelle ballaststoffe, ScoreTabelle eiweiss){
+        this.energieScore = energie;
+        this.zuckerScore = zucker;
+        this.gesFettsaeurenScore = gesFettsaeuren;
+        this.natriumScore = natrium;
+        this.fruechteGemueseScore = fruechteGemuese;
+        this.ballaststoffeScore = ballaststoffe;
+        this.eiweissScore= eiweiss;
+    }
+
+    /**
+     * Initialisiert die Werte des Foods Objekt mit einer Liste
+     * @param scores  Liste der Nahrungswerte
+     */
+    private void initializeValuesScores(List<ScoreTabelle> scores){
+        initializeValuesScores(scores.get(0), scores.get(1), scores.get(2), scores.get(3), scores.get(4), scores.get(5), scores.get(6));
+    }
+
+
 
     /**
      * Getter des Energie Attributs
@@ -251,16 +272,19 @@ public class Product implements Parcelable {
      * @param out Parcel Objekt
      * @param flags 0
      */
-    @Override
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeList(List.of((double)energie, (double)zucker, (double)gesFettsaeuren, (double)natrium, (double)fruechteGemuese, (double)ballaststoffe, (double)eiweiss));
-    }
 
     public static final Parcelable.Creator<Product> CREATOR
             = new Parcelable.Creator<Product>() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         public Product createFromParcel(Parcel in) {
-            return new Product(in);
+            List<Double> myList = new ArrayList<>();
+            in.readList(myList,List.class.getClassLoader());
+            final String productType = in.readString();
+            if(productType.equals("Drink")){
+                return new Drink(myList);
+            }else{
+                return new Food(myList);
+            }
         }
 
         public Product[] newArray(int size) {

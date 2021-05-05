@@ -1,16 +1,27 @@
 package com.example.nutriscore.calculation;
 
 import android.content.Context;
+import android.os.Build;
+import android.os.Parcel;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.nutriscore.FileManager;
+import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Drink extends Product{
 
-    public Drink(Context c, int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
+    public Drink(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
         super(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
-        loadFiles(c);
+        loadFiles(BarCodeScanner.getInstance().getApplicationContext());
+    }
+
+    public Drink(List<Double> values){
+        super(values);
+        loadFiles(BarCodeScanner.getInstance().getApplicationContext());
     }
 
     /**
@@ -30,5 +41,10 @@ public class Drink extends Product{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeList(List.of((double)this.getEnergie(), (double)this.getZucker(), (double)this.getGesFettsaeuren(), (double)this.getNatrium(), (double)this.getFruechteGemuese(), (double)this.getBallaststoffe(), (double)this.getEiweiss()));
+        out.writeString("Drink");
     }
 }

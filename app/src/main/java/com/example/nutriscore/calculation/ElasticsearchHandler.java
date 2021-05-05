@@ -110,9 +110,9 @@ public class ElasticsearchHandler {
             final String category = matcher.group(2);
             System.out.println(category);
             if (category.equals("ml") || category.equals("l")) {
-                return Optional.of(new Drink(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+                return Optional.of(new Drink(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
             } else {
-                return Optional.of(new Food(c, energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
+                return Optional.of(new Food(energy_kJ, sugar_g, saturatedFat_g, salt_mg, fruitsVegetablesNuts_perc, dietaryFiber_g, protein_g));
             }
         }else{
             return Optional.empty();

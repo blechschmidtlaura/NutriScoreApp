@@ -71,6 +71,11 @@ public class BarCodeScanner extends AppCompatActivity {
     SurfaceView cameraView; // cameraView zeigt, das aktuell von der Kamera erfasste Bild
     CameraSource cameraSource; // cameraSource -> ist die Kammera, welche die Bilder liefert
     private static final int REQUEST_CAMERA_PERMISSION = 201; // REQUEST_CAMERA_PERMISSION ist der REQUEST Code für die Kamera Berechtigung
+
+    public static BarCodeScanner getInstance() {
+        return instance;
+    }
+
     @SuppressLint("StaticFieldLeak")
     private static BarCodeScanner instance; // diese KLasse ist ein Singleton, es gibt immer nur eine Instanz der Klasse
     Button manuellBarcode;

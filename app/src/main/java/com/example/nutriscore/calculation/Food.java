@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import androidx.annotation.RequiresApi;
 
 import com.example.nutriscore.FileManager;
+import com.example.nutriscore.barcode_scanner.BarCodeScanner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,19 +18,25 @@ import java.util.List;
  * Die Food Klasse speichert für ein Nahrungsmittel alle wichtigen Inhaltstoffe
  * Es ist Parcelable damit es von einer Activity an die andere weitergegeben werden kann
  */
-public class Food  extends Product {
+public class Food extends Product {
 
-    public Food(Context c, int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
+    public Food(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
         super(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
-        loadFiles(c);
+        loadFiles(BarCodeScanner.getInstance().getApplicationContext());
+    }
+
+    public Food(List<Double> ds) {
+        super(ds);
+        loadFiles(BarCodeScanner.getInstance().getApplicationContext());
     }
 
     /**
      * Die ScoreTabellen für berechnung des NutriScores werden aus dem Lokalen Speicher ausgelesen.
+     *
      * @param c Context wird benötigt um auf den Lokalen Speicher des Handys zuzugreifen in welchem die Tabellen gespeichert sind
      */
 
-    private void loadFiles(Context c){
+    private void loadFiles(Context c) {
         try {
             this.setEnergieScore(new ScoreTabelle(FileManager.getInputStreamFile("Energiewert.txt", c)));
             this.setZuckerScore(new ScoreTabelle(FileManager.getInputStreamFile("Zuckerwert.txt", c)));
@@ -41,5 +48,11 @@ public class Food  extends Product {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeList(List.of((double) this.getEnergie(), (double) this.getZucker(), (double) this.getGesFettsaeuren(), (double) this.getNatrium(), (double) this.getFruechteGemuese(), (double) this.getBallaststoffe(), (double) this.getEiweiss()));
+        out.writeString("Food");
     }
 }

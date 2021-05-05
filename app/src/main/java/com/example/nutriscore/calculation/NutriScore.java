@@ -22,11 +22,11 @@ public class NutriScore {
      * @return Gibt einen Score als DOuble zurück
      */
     public static double calculateScore(Product product) {
-        int energie = product.getEnergie();
+        double energie = product.getEnergie();
         double zucker = product.getZucker();
         double gesFettsaeuren = product.getGesFettsaeuren();
         double natrium = product.getNatrium();
-        int fruechteGemuese = product.getFruechteGemuese();
+        double fruechteGemuese = product.getFruechteGemuese();
         double ballaststoffe = product.getBallaststoffe();
         double eiweiss = product.getEiweiss();
 
