@@ -9,9 +9,9 @@
 
     <TextView
         android:id="@+id/informationText"
-        android:layout_width="351dp"
-        android:layout_height="449dp"
-        android:textSize="24sp"
+        android:layout_width="355dp"
+        android:layout_height="637dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
