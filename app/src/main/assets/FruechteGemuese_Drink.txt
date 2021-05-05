@@ -1,0 +1,4 @@
+Score;FruechteGemuese
+0;40
+-2;60
+-5;999999

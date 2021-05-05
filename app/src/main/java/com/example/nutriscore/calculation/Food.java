@@ -33,7 +33,7 @@ public class Food  implements Parcelable {
      * @param eiweiss Eiweiß Anteil
      */
     public Food(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss) {
-        this.intitializeValues(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
+        this.initializeValues(energie, zucker, gesFettsaeuren, natrium, fruechteGemuese, ballaststoffe, eiweiss);
     }
 
     /**
@@ -71,7 +71,7 @@ public class Food  implements Parcelable {
      * @param ballaststoffe Ballaststoffe
      * @param eiweiss Eiweiß
      */
-    private void intitializeValues(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss){
+    private void initializeValues(int energie, double zucker, double gesFettsaeuren, double natrium, int fruechteGemuese, double ballaststoffe, double eiweiss){
         this.energie = energie;
         this.zucker = zucker;
         this.gesFettsaeuren = gesFettsaeuren;
@@ -86,7 +86,7 @@ public class Food  implements Parcelable {
      * @param doubles  Liste der Nahrungswerte
      */
     private void initializeValues(List<Double> doubles){
-        intitializeValues(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
+        initializeValues(doubles.get(0).intValue(), doubles.get(1), doubles.get(2), doubles.get(3), doubles.get(4).intValue(), doubles.get(5), doubles.get(6));
     }
 
     /**
